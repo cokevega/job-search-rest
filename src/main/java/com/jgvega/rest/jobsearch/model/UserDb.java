@@ -4,13 +4,14 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
-import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.MappedSuperclass;
+import javax.persistence.PrePersist;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
@@ -20,36 +21,38 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Entity
+@MappedSuperclass
 @Getter
 @Setter
-@Table(name = "education")
 @SuperBuilder
-public class Education implements Serializable {
+public class UserDb implements Serializable {
 
-	private static final long serialVersionUID = 95005091825546579L;
+	private static final long serialVersionUID = -5010586986703337868L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank
-	@Length(max=100)
-	@Column(columnDefinition = "varchar(100)", nullable = false, length = 100)
-	private String title;
-	@NotBlank
-	@Length(max = 100)
-	@Column(length = 100, nullable = false, columnDefinition = "varchar(100)")
-	private String city;
 	@Length(min = 20, max = 100)
 	@Column(nullable = false, length = 100, columnDefinition = "varchar(100)")
+	private String name;
 	@NotBlank
-	private String center;
+	@Length(max = 100)
+	@Email
+	@Column(nullable = false, length = 100, columnDefinition = "varchar(100)")
+	private String email;
+	@NotBlank
+	@Length(min = 20, max = 100)
+	@Column(nullable = false, length = 100, columnDefinition = "varchar(100)")
+	private String password;
+	@Temporal(TemporalType.DATE)
 	@NotNull
-	@Temporal(TemporalType.DATE)
-	@Column(name = "begin", nullable = false)
-	private Date beginDate;
-	@Temporal(TemporalType.DATE)
-	@Column(name = "end")
-	private Date endDate;
+	@Column(name = "create_at", nullable = false)
+	private Date createAt;
+
+	@PrePersist
+	public void create_at() {
+		this.createAt = new Date();
+	}
 
 }

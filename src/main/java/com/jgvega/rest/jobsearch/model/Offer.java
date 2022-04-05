@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EnumType;
+import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -41,11 +43,11 @@ public class Offer implements Serializable {
 	private Long id;
 	@NotBlank
 	@Length(min = 50, max = 1024)
-	@Column(nullable = false, length = 1024)
+	@Column(nullable = false, length = 1024,columnDefinition = "varchar(1024)")
 	private String description;
 	@NotBlank
 	@Length(min = 10, max = 100)
-	@Column(nullable = false, length = 100)
+	@Column(nullable = false, length = 100, columnDefinition = "varchar(100)")
 	private String title;
 	@Column(name = "min_salary", precision = 2)
 	private Double minSalary;
@@ -53,18 +55,19 @@ public class Offer implements Serializable {
 	private Double maxSalary;
 	@NotNull
 	@Length(max = 50)
-	@Column(columnDefinition = "varchar(50)", nullable = false, length = 50)
+	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
 	private WorkModel model;
 	@Length(max = 128)
-	@Column(length = 128)
+	@Column(length = 128, columnDefinition = "varchar(128)")
 	private String location;
 	@NotNull
 	@Temporal(TemporalType.DATE)
 	@Column(name = "create_at", nullable = false)
 	private Date date;
 	@NotNull
-	@Length(min = 10, max = 64)
-	@Column(name = "min_education_level", columnDefinition = "varchar(64)", nullable = false, length = 64)
+	@Column(name = "min_education_level", nullable = false)
+	@Enumerated(EnumType.STRING)
 	private EducationLevel minEducationLevel;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Category category;

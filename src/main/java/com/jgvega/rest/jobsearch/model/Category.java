@@ -28,11 +28,11 @@ public class Category implements Serializable {
 	private Long id;
 	@NotBlank
 	@Length(max = 50)
-	@Column(length = 50, nullable = false)
+	@Column(length = 50, nullable = false, columnDefinition = "varchar(50)")
 	private String name;
 	@NotBlank
 	@Length(min = 40, max = 256)
-	@Column(length = 256, nullable = false)
+	@Column(length = 256, nullable = false, columnDefinition = "varchar(256)")
 	private String description;
 
 }
