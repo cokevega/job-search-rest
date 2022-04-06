@@ -1,11 +1,17 @@
-package com.jgvega.rest.jobsearch.model;
+package com.jgvega.rest.jobsearch.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -13,6 +19,8 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.jgvega.rest.jobsearch.model.UserDb;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -35,9 +43,18 @@ public class Employee extends UserDb implements Serializable {
 	@Column(columnDefinition = "varchar(12)")
 	@Length(min=9,max = 12)
 	private String phone;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "employee_id", nullable = false)
 	private List<Education> education;
-	private List<Language> languages;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "employee_id", nullable = false)
 	private List<Experience> experiences;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
+	@JoinColumn(name = "employee_id", nullable = false)
 	private List<Skill> skills;
+	@ManyToMany(mappedBy = "employees")
+	private Set<Language> languages;
+	@ManyToMany(mappedBy = "employees")
+	private Set<Application> applications;
 
 }

@@ -1,9 +1,11 @@
-package com.jgvega.rest.jobsearch.model;
+package com.jgvega.rest.jobsearch.model.entity;
 
 import java.io.Serializable;
 
 import javax.persistence.Entity;
 import javax.persistence.Table;
+
+import com.jgvega.rest.jobsearch.model.Attribute;
 
 import lombok.Getter;
 import lombok.Setter;

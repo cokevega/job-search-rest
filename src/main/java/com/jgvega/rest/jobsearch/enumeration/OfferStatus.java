@@ -1,30 +1,25 @@
 package com.jgvega.rest.jobsearch.enumeration;
 
-import com.jgvega.rest.jobsearch.constant.Constant;
-
-public enum Level {
-	LOW {
+public enum OfferStatus {
+	CREATED {
 		@Override
 		public String toString() {
-			return Constant.LOW;
+			return "Created";
 		}
-	},
-	MEDIUM {
+	}, ACTIVE {
 		@Override
 		public String toString() {
-			return Constant.MEDIUM;
+			return "Active";
 		}
-	},
-	HIGH {
+	}, INACTIVE {
 		@Override
 		public String toString() {
-			return Constant.HIGH;
+			return "Inactive";
 		}
-	},
-	EXPERT {
+	}, DELETED {
 		@Override
 		public String toString() {
-			return Constant.EXPERT;
+			return "Deleted";
 		}
 	};
 }

@@ -28,5 +28,5 @@ public enum EducationLevel implements Serializable {
 		public String toString() {
 			return Constant.DEGREE;
 		}
-	},
+	};
 }

@@ -14,6 +14,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.jgvega.rest.jobsearch.commons.model.CommonModel;
 import com.jgvega.rest.jobsearch.enumeration.Level;
 
 import lombok.Getter;
@@ -24,17 +25,10 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class Attribute implements Serializable {
+public class Attribute extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = -6188182183674966879L;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	@NotBlank
-	@Column(length = 100, nullable = false, columnDefinition = "varchar(100)")
-	@Length(max = 100)
-	private String name;
 	@NotNull
 	@Column(nullable = false)
 	@Length(max = 50)

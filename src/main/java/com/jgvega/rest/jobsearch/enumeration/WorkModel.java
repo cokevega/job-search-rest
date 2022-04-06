@@ -20,5 +20,5 @@ public enum WorkModel {
 		public String toString() {
 			return Constant.HYBRID;
 		}
-	}
+	};
 }
