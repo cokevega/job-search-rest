@@ -27,14 +27,14 @@ public class Category extends CommonModel implements Serializable {
 	}
 
 	public Category(Long id, @NotBlank @Length(max = 100) String name,
-			@NotBlank @Length(min = 40, max = 256) String description) {
+			@NotBlank @Length(min = 10, max = 512) String description) {
 		super(id, name);
 		this.description = description;
 	}
 
 	@NotBlank
-	@Length(min = 40, max = 256)
-	@Column(length = 256, nullable = false, columnDefinition = "varchar(256)")
+	@Length(min = 10, max = 512)
+	@Column(length = 512, nullable = false, columnDefinition = "varchar(256)")
 	private String description;
 
 }

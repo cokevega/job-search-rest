@@ -1,13 +1,31 @@
 package com.jgvega.rest.jobsearch.faker;
 
-import org.springframework.boot.CommandLineRunner;
+import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.stereotype.Component;
+
+import com.github.javafaker.Faker;
+import com.jgvega.rest.jobsearch.model.entity.Category;
+import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
+
+@Component
 public class CategoryFaker implements CommandLineRunner {
+
+	private final Faker faker=new Faker(new Locale("es-Es"));
+	@Autowired
+	private ICategoryRepository repository;
 
 	@Override
 	public void run(String... args) throws Exception {
-		// TODO Auto-generated method stub
-
+		List<Category> fakeCategories = LongStream.rangeClosed(1, 20).mapToObj(i -> new Category(
+				i, faker.job().field(), faker.job().title()))
+				.collect(Collectors.toList());
+		repository.saveAll(fakeCategories);
 	}
 
 }
