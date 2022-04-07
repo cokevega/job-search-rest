@@ -16,7 +16,7 @@ import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
 @Component
 public class CategoryFaker implements CommandLineRunner {
 
-	private final Faker faker=new Faker(new Locale("es-Es"));
+	private final Faker faker=new Faker();
 	@Autowired
 	private ICategoryRepository repository;
 
