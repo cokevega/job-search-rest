@@ -19,5 +19,14 @@ public class Constant implements Serializable {
 	public static final String HIGH_SCHOOL="High school";
 	public static final String VOCATIONAL_TRAINING="Vocational training";
 	public static final String DEGREE="Degree";
+	
+	public static final String UNKNOWN="Unknown";
+	public static final String ACCEPTED="Accepted";
+	public static final String REJECTED="Rejected";
+	
+	public static final String CREATED="Created";
+	public static final String ACTIVE="Active";
+	public static final String INACTIVE="Inactive";
+	public static final String DELETED="Deleted";
 
 }

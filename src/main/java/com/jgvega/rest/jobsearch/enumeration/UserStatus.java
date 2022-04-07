@@ -1,20 +1,24 @@
 package com.jgvega.rest.jobsearch.enumeration;
 
+import com.jgvega.rest.jobsearch.constant.Constant;
+
 public enum UserStatus {
 	CREATED {
 		@Override
 		public String toString() {
-			return "Created";
+			return Constant.CREATED;
 		}
-	}, ACTIVE {
+	},
+	ACTIVE {
 		@Override
 		public String toString() {
-			return "Active";
+			return Constant.ACTIVE;
 		}
-	}, INACTIVE {
+	},
+	INACTIVE {
 		@Override
 		public String toString() {
-			return "Inactive";
+			return Constant.INACTIVE;
 		}
 	};
 }
