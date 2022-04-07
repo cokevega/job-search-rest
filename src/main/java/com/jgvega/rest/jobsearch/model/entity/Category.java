@@ -13,16 +13,24 @@ import com.jgvega.rest.jobsearch.commons.model.CommonModel;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "category")
-@SuperBuilder
 public class Category extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = -8469018946421783184L;
+
+	public Category() {
+		super();
+	}
+
+	public Category(Long id, @NotBlank @Length(max = 100) String name,
+			@NotBlank @Length(min = 40, max = 256) String description) {
+		super(id, name);
+		this.description = description;
+	}
 
 	@NotBlank
 	@Length(min = 40, max = 256)

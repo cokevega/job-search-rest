@@ -21,15 +21,27 @@ import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @Getter
 @Setter
-@SuperBuilder
 public class UserDb extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = -5010586986703337868L;
+
+	public UserDb() {
+		super();
+	}
+
+	public UserDb(Long id, @NotBlank @Length(max = 100) String name, @NotBlank @Length(max = 100) @Email String email,
+			@NotBlank @Length(min = 20, max = 100) String password, @NotNull Date createAt,
+			@NotNull UserStatus status) {
+		super(id, name);
+		this.email = email;
+		this.password = password;
+		this.createAt = createAt;
+		this.status = status;
+	}
 
 	@NotBlank
 	@Length(max = 100)

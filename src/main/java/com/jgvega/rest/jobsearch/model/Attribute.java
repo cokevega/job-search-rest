@@ -5,9 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Column;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
@@ -19,15 +16,22 @@ import com.jgvega.rest.jobsearch.enumeration.Level;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @MappedSuperclass
 @Getter
 @Setter
-@SuperBuilder
 public class Attribute extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = -6188182183674966879L;
+
+	public Attribute() {
+		super();
+	}
+
+	public Attribute(Long id, @NotBlank @Length(max = 100) String name, @NotNull @Length(max = 50) Level level) {
+		super(id, name);
+		this.level = level;
+	}
 
 	@NotNull
 	@Column(nullable = false)

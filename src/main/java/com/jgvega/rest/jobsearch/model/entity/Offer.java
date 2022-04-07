@@ -29,20 +29,41 @@ import com.jgvega.rest.jobsearch.enumeration.WorkModel;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "offer")
-@SuperBuilder
 public class Offer extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = -6120846272017329568L;
 
+	public Offer() {
+		super();
+	}
+
+	public Offer(Long id, @NotBlank @Length(max = 100) String name,
+			@NotBlank @Length(min = 50, max = 1024) String description, Double minSalary, Double maxSalary,
+			@NotNull @Length(max = 50) WorkModel model, @Length(max = 128) String location, @NotNull Date date,
+			@NotNull EducationLevel minEducationLevel, Category category, List<Application> applications,
+			Enterprise enterprise, @NotNull OfferStatus status) {
+		super(id, name);
+		this.description = description;
+		this.minSalary = minSalary;
+		this.maxSalary = maxSalary;
+		this.model = model;
+		this.location = location;
+		this.date = date;
+		this.minEducationLevel = minEducationLevel;
+		this.category = category;
+		this.applications = applications;
+		this.enterprise = enterprise;
+		this.status = status;
+	}
+
 	@NotBlank
 	@Length(min = 50, max = 1024)
-	@Column(nullable = false, length = 1024,columnDefinition = "varchar(1024)")
+	@Column(nullable = false, length = 1024, columnDefinition = "varchar(1024)")
 	private String description;
 	@Column(name = "min_salary", precision = 2)
 	private Double minSalary;
@@ -69,7 +90,7 @@ public class Offer extends CommonModel implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "offer")
 	private List<Application> applications;
 	@ManyToOne()
-	@JoinColumn(name="enterprise_id")
+	@JoinColumn(name = "enterprise_id")
 	private Enterprise enterprise;
 	@NotNull
 	@Enumerated(EnumType.STRING)

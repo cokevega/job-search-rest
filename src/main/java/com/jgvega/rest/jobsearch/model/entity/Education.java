@@ -17,16 +17,27 @@ import com.jgvega.rest.jobsearch.commons.model.CommonModel;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Getter
 @Setter
 @Table(name = "education")
-@SuperBuilder
 public class Education extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = 95005091825546579L;
+
+	public Education() {
+		super();
+	}
+
+	public Education(Long id, @NotBlank @Length(max = 100) String name, @NotBlank @Length(max = 100) String city,
+			@Length(min = 20, max = 100) @NotBlank String center, @NotNull Date beginDate, Date endDate) {
+		super(id, name);
+		this.city = city;
+		this.center = center;
+		this.beginDate = beginDate;
+		this.endDate = endDate;
+	}
 
 	@NotBlank
 	@Length(max = 100)
