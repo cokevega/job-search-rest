@@ -2,9 +2,7 @@ package com.jgvega.rest.jobsearch.model.entity;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -13,8 +11,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -37,13 +33,13 @@ public class Application implements Serializable {
 	private static final long serialVersionUID = -3495615916265847083L;
 	
 	public Application(Long id, @NotNull Date createAt, String comments, @NotNull ApplicationStatus status, Offer offer,
-			Set<Employee> employees) {
+			Employee employee) {
 		this.id = id;
 		this.createAt = createAt;
 		this.comments = comments;
 		this.status = status;
 		this.offer = offer;
-		this.employees = employees;
+		this.employee = employee;
 	}
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -58,11 +54,11 @@ public class Application implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private ApplicationStatus status;
-	@ManyToOne()
-	@JoinColumn(name = "offer_id")
+	@ManyToOne
+	@JoinColumn(name = "offer_id", nullable = false)
 	private Offer offer;
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinTable(name = "employee_application", joinColumns = {@JoinColumn(name="application_id")}, inverseJoinColumns = {@JoinColumn(name="employee_id")})
-	private Set<Employee> employees;
+	@ManyToOne
+	@JoinColumn(name = "employee_id", nullable = false)
+	private Employee employee;
 	
 }

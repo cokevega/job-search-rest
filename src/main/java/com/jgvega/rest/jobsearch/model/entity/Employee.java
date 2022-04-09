@@ -45,7 +45,7 @@ public class Employee extends UserDb implements Serializable {
 			@NotNull Date born,
 			@Pattern(regexp = "^\\d{3}\\s*(\\d{2}\\s*){3}$", message = "Accepted formats:\n-XXXXXXXXX\n-XXX XX XX XX") @Length(min = 9, max = 12) String phone,
 			List<Education> education, List<Experience> experiences, List<Skill> skills, Set<Language> languages,
-			Set<Application> applications) {
+			List<Application> applications) {
 		super(id, name, email, password, createAt, status);
 		this.born = born;
 		this.phone = phone;
@@ -75,7 +75,7 @@ public class Employee extends UserDb implements Serializable {
 	private List<Skill> skills;
 	@ManyToMany(mappedBy = "employees")
 	private Set<Language> languages;
-	@ManyToMany(mappedBy = "employees")
-	private Set<Application> applications;
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+	private List<Application> applications;
 
 }
