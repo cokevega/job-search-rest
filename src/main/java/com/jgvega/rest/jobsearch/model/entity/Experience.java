@@ -16,30 +16,19 @@ import org.hibernate.validator.constraints.Length;
 import com.jgvega.rest.jobsearch.commons.model.CommonModel;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
 @Entity
 @Table(name = "experience")
+@SuperBuilder
+@NoArgsConstructor
 public class Experience extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = 5814969490078999132L;
-
-	public Experience() {
-		super();
-	}
-
-	public Experience(Long id, @NotBlank @Length(max = 100) String name,
-			@NotBlank @Length(min = 5, max = 64) String enterprise, @NotNull Date begin, Date end,
-			@Length(max = 64) String comments, @NotBlank @Length(min = 5, max = 64) String city) {
-		super(id, name);
-		this.enterprise = enterprise;
-		this.begin = begin;
-		this.end = end;
-		this.comments = comments;
-		this.city = city;
-	}
 
 	@NotBlank
 	@Length(min = 5, max = 64)

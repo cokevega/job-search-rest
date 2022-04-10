@@ -19,6 +19,7 @@ import javax.validation.constraints.NotNull;
 
 import com.jgvega.rest.jobsearch.enumeration.ApplicationStatus;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -28,19 +29,11 @@ import lombok.Setter;
 @Setter
 @Table(name = "application")
 @NoArgsConstructor
+@AllArgsConstructor
 public class Application implements Serializable {
 
 	private static final long serialVersionUID = -3495615916265847083L;
-	
-	public Application(Long id, @NotNull Date createAt, String comments, @NotNull ApplicationStatus status, Offer offer,
-			Employee employee) {
-		this.id = id;
-		this.createAt = createAt;
-		this.comments = comments;
-		this.status = status;
-		this.offer = offer;
-		this.employee = employee;
-	}
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -60,5 +53,10 @@ public class Application implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "employee_id", nullable = false)
 	private Employee employee;
-	
+
+	@Override
+	public boolean equals(Object obj) {
+		return this.id == ((Application) obj).getId();
+	}
+
 }
