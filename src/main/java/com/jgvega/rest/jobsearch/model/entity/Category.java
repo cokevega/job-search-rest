@@ -34,7 +34,7 @@ public class Category extends CommonModel implements Serializable {
 
 	@NotBlank
 	@Length(min = 10, max = 512)
-	@Column(length = 512, nullable = false, columnDefinition = "varchar(256)")
+	@Column(length = 512, nullable = false, columnDefinition = "varchar(512)")
 	private String description;
 
 }
