@@ -17,7 +17,7 @@ public class OfferFaker implements CommandLineRunner {
 
 	@Autowired
 	private ICategoryRepository categoryRepository;
-	private Faker faker;
+	private Faker faker=Faker.instance();
 
 	@Override
 	public void run(String... args) throws Exception {

@@ -1,4 +1,4 @@
-package com.jgvega.rest.jobsearch.model;
+package com.jgvega.rest.jobsearch.model.commons;
 
 import java.io.Serializable;
 
@@ -10,7 +10,6 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.commons.model.CommonModel;
 import com.jgvega.rest.jobsearch.enumeration.Level;
 
 import lombok.Getter;

@@ -24,11 +24,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.commons.model.CommonModel;
+import com.jgvega.rest.jobsearch.constant.Constant;
 import com.jgvega.rest.jobsearch.enumeration.EducationLevel;
 import com.jgvega.rest.jobsearch.enumeration.OfferStatus;
 import com.jgvega.rest.jobsearch.enumeration.WorkModel;
-import com.jgvega.rest.jobsearch.faker.Constant;
+import com.jgvega.rest.jobsearch.model.commons.CommonModel;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

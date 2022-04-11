@@ -20,7 +20,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.model.UserDb;
+import com.jgvega.rest.jobsearch.model.commons.UserDb;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -1,4 +1,4 @@
-package com.jgvega.rest.jobsearch.commons.model;
+package com.jgvega.rest.jobsearch.model.commons;
 
 import java.io.Serializable;
 
@@ -10,6 +10,8 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
+
+import com.jgvega.rest.jobsearch.constant.Constant;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -29,8 +31,9 @@ public class CommonModel implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotBlank
-	@Column(length = 100, nullable = false, columnDefinition = "varchar(100)")
-	@Length(max = 100)
+	@Column(length = Constant.MAX_LENGTH_NAME, nullable = false, columnDefinition = "varchar("
+			+ Constant.MAX_LENGTH_NAME + ")")
+	@Length(max = Constant.MAX_LENGTH_NAME)
 	private String name;
 
 	@Override

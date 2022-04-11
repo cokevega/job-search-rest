@@ -1,4 +1,4 @@
-package com.jgvega.rest.jobsearch.model;
+package com.jgvega.rest.jobsearch.model.commons;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -16,7 +16,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.commons.model.CommonModel;
+import com.jgvega.rest.jobsearch.constant.Constant;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 
 import lombok.Getter;
@@ -34,13 +34,15 @@ public class UserDb extends CommonModel implements Serializable {
 	private static final long serialVersionUID = -5010586986703337868L;
 
 	@NotBlank
-	@Length(max = 100)
+	@Length(max = Constant.MAX_LENGTH_EMAIL)
 	@Email
-	@Column(nullable = false, length = 100, columnDefinition = "varchar(100)", unique = true)
+	@Column(nullable = false, length = Constant.MAX_LENGTH_EMAIL, columnDefinition = "varchar("
+			+ Constant.MAX_LENGTH_EMAIL + ")", unique = true)
 	private String email;
 	@NotBlank
-	@Length(min = 20, max = 100)
-	@Column(nullable = false, length = 100, columnDefinition = "varchar(100)")
+	@Length(min = Constant.MIN_LENGTH_PASSWORD, max = Constant.MAX_LENGTH_PASSWORD)
+	@Column(nullable = false, length = Constant.MAX_LENGTH_PASSWORD, columnDefinition = "varchar("
+			+ Constant.MAX_LENGTH_PASSWORD + ")")
 	private String password;
 	@Temporal(TemporalType.DATE)
 	@NotNull

@@ -10,7 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.jgvega.rest.jobsearch.model.Attribute;
+import com.jgvega.rest.jobsearch.model.commons.Attribute;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

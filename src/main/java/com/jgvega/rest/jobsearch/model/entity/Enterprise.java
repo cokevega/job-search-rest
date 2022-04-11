@@ -9,7 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.jgvega.rest.jobsearch.model.UserDb;
+import com.jgvega.rest.jobsearch.model.commons.UserDb;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
