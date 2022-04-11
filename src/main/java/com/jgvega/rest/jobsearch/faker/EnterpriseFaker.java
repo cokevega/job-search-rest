@@ -30,7 +30,7 @@ public class EnterpriseFaker implements CommandLineRunner {
 				.mapToObj(i -> Enterprise.builder().createAt(faker.date().birthday(0, Constant.FAKE_YEARS_APP))
 						.email(faker.internet().emailAddress()).id(i).name(faker.company().name())
 						.password(faker.internet().password())
-						.status(UserStatus.values()[faker.number().numberBetween(0, UserStatus.values().length - 1)])
+						.status(UserStatus.values()[faker.number().numberBetween(0, UserStatus.values().length)])
 						.build())
 				.collect(Collectors.toList());
 		enterpriseRepository.saveAll(fakerEnterprises);
