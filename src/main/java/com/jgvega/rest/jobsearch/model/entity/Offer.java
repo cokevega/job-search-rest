@@ -63,7 +63,7 @@ public class Offer extends CommonModel implements Serializable {
 	@Column(length = 128, columnDefinition = "varchar(128)")
 	private String location;
 	@NotNull
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "create_at", nullable = false)
 	private Date date;
 	@NotNull

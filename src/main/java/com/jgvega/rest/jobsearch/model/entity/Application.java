@@ -38,7 +38,7 @@ public class Application implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@NotNull
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date", nullable = false)
 	private Date createAt;
 	@Column(columnDefinition = "varchar(1024)", length = 1024)

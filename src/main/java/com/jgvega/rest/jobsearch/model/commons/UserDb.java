@@ -44,7 +44,7 @@ public class UserDb extends CommonModel implements Serializable {
 	@Column(nullable = false, length = Constant.MAX_LENGTH_PASSWORD, columnDefinition = "varchar("
 			+ Constant.MAX_LENGTH_PASSWORD + ")")
 	private String password;
-	@Temporal(TemporalType.DATE)
+	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Column(name = "create_at", nullable = false)
 	private Date createAt;

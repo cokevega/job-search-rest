@@ -68,5 +68,6 @@ public class Constant implements Serializable {
 	 * Enterprise
 	 */
 	public static final int ENTERPRISE_NUMBER=50;
+	public static final int MAX_LENGTH_ENTERPRISE_DESCRIPTION=2048;
 
 }

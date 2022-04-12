@@ -1,6 +1,9 @@
 package com.jgvega.rest.jobsearch.faker;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Locale.LanguageRange;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -19,7 +22,7 @@ import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CategoryFaker implements CommandLineRunner {
 
-	private final Faker faker = Faker.instance();
+	private final Faker faker = Faker.instance(Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
 	@Autowired
 	private ICategoryRepository repository;
 

@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.validator.constraints.Length;
+
+import com.jgvega.rest.jobsearch.constant.Constant;
 import com.jgvega.rest.jobsearch.model.commons.UserDb;
 
 import lombok.Getter;
@@ -28,5 +32,8 @@ public class Enterprise extends UserDb implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "enterprise")
 	private List<Offer> offers;
+	@Length(max = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION)
+	@Column(length = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION, columnDefinition = "text")
+	private String description;
 
 }

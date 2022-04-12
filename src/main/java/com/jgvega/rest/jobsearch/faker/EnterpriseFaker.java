@@ -1,6 +1,9 @@
 package com.jgvega.rest.jobsearch.faker;
 
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.Locale.LanguageRange;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -22,7 +25,7 @@ public class EnterpriseFaker implements CommandLineRunner {
 
 	@Autowired
 	private IEnterpriseRepository enterpriseRepository;
-	private final Faker faker = Faker.instance();
+	private final Faker faker = Faker.instance(Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
 
 	@Override
 	public void run(String... args) throws Exception {
