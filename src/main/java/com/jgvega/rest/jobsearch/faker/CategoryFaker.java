@@ -29,7 +29,7 @@ public class CategoryFaker implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		List<Category> fakeCategories = LongStream.rangeClosed(1, Constant.CATEGORY_NUMBER).mapToObj(
-				i -> Category.builder().id(i).name(faker.job().title()).description(faker.lorem().paragraph()).build())
+				i -> Category.builder().id(i).name(faker.job().field()).description(faker.lorem().paragraph()).build())
 				.collect(Collectors.toList());
 		repository.saveAll(fakeCategories);
 	}

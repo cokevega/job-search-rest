@@ -50,17 +50,16 @@ public class Offer extends CommonModel implements Serializable {
 	@Column(nullable = false, length = Constant.MAX_CHARACTERS_OFFER_DESCRIPTION, columnDefinition = "varchar("
 			+ Constant.MAX_CHARACTERS_OFFER_DESCRIPTION + ")")
 	private String description;
-	@Column(name = "min_salary", precision = 2)
-	private Double minSalary;
-	@Column(name = "max_salary", precision = 2)
-	private Double maxSalary;
+	@Column(name = "min_salary")
+	private Integer minSalary;
+	@Column(name = "max_salary")
+	private Integer maxSalary;
 	@NotNull
-	@Length(max = 50)
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
 	private WorkModel model;
-	@Length(max = 128)
-	@Column(length = 128, columnDefinition = "varchar(128)")
+	@Length(max = Constant.MAX_LENGTH_OFFER_LOCATION)
+	@Column(length = Constant.MAX_LENGTH_OFFER_LOCATION, columnDefinition = "varchar("+Constant.MAX_LENGTH_OFFER_LOCATION+")")
 	private String location;
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)

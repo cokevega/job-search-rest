@@ -58,6 +58,7 @@ public class Constant implements Serializable {
 	public static final int OFFER_NUMBER=300;
 	public static final int MIN_CHARACTERS_OFFER_DESCRIPTION=50;
 	public static final int MAX_CHARACTERS_OFFER_DESCRIPTION=1024;
+	public static final int MAX_LENGTH_OFFER_LOCATION=128;
 	/**
 	 * UserDb
 	 */

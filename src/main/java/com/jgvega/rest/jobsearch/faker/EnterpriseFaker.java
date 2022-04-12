@@ -25,14 +25,14 @@ public class EnterpriseFaker implements CommandLineRunner {
 
 	@Autowired
 	private IEnterpriseRepository enterpriseRepository;
-	private final Faker faker = Faker.instance(Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
+	private final Faker faker = Faker.instance(
+			Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
 
 	@Override
 	public void run(String... args) throws Exception {
 		List<Enterprise> fakerEnterprises = LongStream.rangeClosed(1, Constant.ENTERPRISE_NUMBER)
-				.mapToObj(i -> Enterprise.builder().createAt(faker.date().birthday(0, Constant.FAKE_YEARS_APP))
-						.email(faker.internet().emailAddress()).id(i).name(faker.company().name())
-						.password(faker.internet().password())
+				.mapToObj(i -> Enterprise.builder().email(faker.internet().emailAddress()).id(i)
+						.name(faker.company().name()).password(faker.internet().password())
 						.status(UserStatus.values()[faker.number().numberBetween(0, UserStatus.values().length)])
 						.build())
 				.collect(Collectors.toList());
