@@ -20,6 +20,7 @@ import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.jgvega.rest.jobsearch.constant.Constant;
 import com.jgvega.rest.jobsearch.model.commons.UserDb;
 
 import lombok.Getter;
@@ -41,9 +42,9 @@ public class Employee extends UserDb implements Serializable {
 	@NotNull
 	@Column(nullable = false)
 	private Date born;
-	@Pattern(regexp = "^\\d{3}\\s*(\\d{2}\\s*){3}$", message = "Accepted formats:\n-XXXXXXXXX\n-XXX XX XX XX")
-	@Column(columnDefinition = "varchar(12)")
-	@Length(min = 9, max = 12)
+	@Pattern(regexp = "^(\\d{3}(\\s|\\-|\\.)*){3}$", message = "Accepted formats:\n-XXXXXXXXX\n-XXX XXX XXX\n-XXX.XXX.XXX\n-XXX-XXX-XXX")
+	@Column(columnDefinition = "varchar("+Constant.MAX_PHONE_LENGTH+")")
+	@Length(min = Constant.MIN_PHONE_LENGTH, max = Constant.MAX_PHONE_LENGTH)
 	private String phone;
 	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
 	@JoinColumn(name = "employee_id", nullable = false)

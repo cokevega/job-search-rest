@@ -70,5 +70,13 @@ public class Constant implements Serializable {
 	 */
 	public static final int ENTERPRISE_NUMBER=50;
 	public static final int MAX_LENGTH_ENTERPRISE_DESCRIPTION=2048;
+	/**
+	 * Employee
+	 */
+	public static final int EMPLOYEE_NUMBER=300;
+	public static final int MIN_AGE=18;
+	public static final int MAX_AGE=65;
+	public static final int MIN_PHONE_LENGTH=9;
+	public static final int MAX_PHONE_LENGTH=12;
 
 }
