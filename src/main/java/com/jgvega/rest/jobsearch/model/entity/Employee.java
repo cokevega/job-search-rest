@@ -8,7 +8,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
@@ -22,8 +21,8 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.model.commons.UserDb;
+import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -8,8 +8,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Length;
-
 import com.jgvega.rest.jobsearch.enumeration.Level;
 
 import lombok.Getter;
@@ -28,7 +26,6 @@ public class Attribute extends CommonModel implements Serializable {
 
 	@NotNull
 	@Column(nullable = false)
-	@Length(max = 50)
 	@Enumerated(EnumType.STRING)
 	private Level level;
 

@@ -15,10 +15,12 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
+import com.jgvega.rest.jobsearch.enumeration.Level;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 import com.jgvega.rest.jobsearch.model.entity.Education;
 import com.jgvega.rest.jobsearch.model.entity.Employee;
 import com.jgvega.rest.jobsearch.model.entity.Experience;
+import com.jgvega.rest.jobsearch.model.entity.Skill;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
 import com.jgvega.rest.jobsearch.service.EmployeeService;
 import com.jgvega.rest.jobsearch.util.Constant;
@@ -41,9 +43,8 @@ public class EmployeeFaker implements CommandLineRunner {
 		fakerEmployees = LongStream.rangeClosed(1, Constant.EMPLOYEE_NUMBER).mapToObj(this::createFakeEmployee)
 				.collect(Collectors.toList());
 		LongStream.rangeClosed(1, Constant.EDUCATION_NUMBER).forEach(this::createFakeEducation);
-		employeeRepository.saveAll(fakerEmployees);
-		fakerEmployees=employeeRepository.findAll();
 		LongStream.rangeClosed(1, Constant.EXPERIENCE_NUMBER).forEach(this::createFakeExperience);
+		LongStream.rangeClosed(1, Constant.SKILL_NUMBER).forEach(this::createFakeSkill);
 		employeeRepository.saveAll(fakerEmployees);
 	}
 
@@ -76,6 +77,15 @@ public class EmployeeFaker implements CommandLineRunner {
 				.end(faker.date().between(beginDate, now)).enterprise(faker.company().name()).id(i)
 				.name(faker.job().position()).build();
 		employee = employeeService.addExperience(employee, fakeExperience);
+		fakerEmployees.set(index, employee);
+	}
+	
+	private void createFakeSkill(long i) {
+		int index = faker.number().numberBetween(0, fakerEmployees.size());
+		Employee employee = fakerEmployees.get(index);
+		Skill fakeSkill=Skill.builder().id(i).level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
+				.name(faker.job().keySkills()).build();
+		employee=employeeService.addSkill(employee, fakeSkill);
 		fakerEmployees.set(index, employee);
 	}
 
