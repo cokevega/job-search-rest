@@ -59,6 +59,8 @@ public class Constant implements Serializable {
 	public static final int MIN_CHARACTERS_OFFER_DESCRIPTION=50;
 	public static final int MAX_CHARACTERS_OFFER_DESCRIPTION=1024;
 	public static final int MAX_LENGTH_OFFER_LOCATION=128;
+	public static final int MIN_MAX_SALARY=10000;
+	public static final int MAX_MAX_SALARY=60000;
 	/**
 	 * UserDb
 	 */
@@ -78,5 +80,13 @@ public class Constant implements Serializable {
 	public static final int MAX_AGE=65;
 	public static final int MIN_PHONE_LENGTH=9;
 	public static final int MAX_PHONE_LENGTH=12;
+	/**
+	 * Education
+	 */
+	public static final int EDUCATION_NUMBER=600;
+	public static final int MAX_LENGTH_CITY=100;
+	public static final int MIN_LENGTH_CENTER=10;
+	public static final int MAX_LENGTH_CENTER=100;
+	
 
 }

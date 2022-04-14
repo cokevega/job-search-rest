@@ -13,6 +13,7 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.jgvega.rest.jobsearch.constant.Constant;
 import com.jgvega.rest.jobsearch.model.commons.CommonModel;
 
 import lombok.Getter;
@@ -31,11 +32,13 @@ public class Education extends CommonModel implements Serializable {
 	private static final long serialVersionUID = 95005091825546579L;
 
 	@NotBlank
-	@Length(max = 100)
-	@Column(length = 100, nullable = false, columnDefinition = "varchar(100)")
+	@Length(max = Constant.MAX_LENGTH_CITY)
+	@Column(length = Constant.MAX_LENGTH_CITY, nullable = false, columnDefinition = "varchar("
+			+ Constant.MAX_LENGTH_CITY + ")")
 	private String city;
-	@Length(min = 20, max = 100)
-	@Column(nullable = false, length = 100, columnDefinition = "varchar(100)")
+	@Length(min = Constant.MIN_LENGTH_CENTER, max = Constant.MAX_LENGTH_CENTER)
+	@Column(nullable = false, length = Constant.MAX_LENGTH_CENTER, columnDefinition = "varchar("
+			+ Constant.MAX_LENGTH_CENTER + ")")
 	@NotBlank
 	private String center;
 	@NotNull

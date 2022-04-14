@@ -22,16 +22,20 @@ import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class CategoryFaker implements CommandLineRunner {
 
-	private final Faker faker = Faker.instance(Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
+	private final Faker faker = Faker.instance(
+			Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
 	@Autowired
 	private ICategoryRepository repository;
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<Category> fakeCategories = LongStream.rangeClosed(1, Constant.CATEGORY_NUMBER).mapToObj(
-				i -> Category.builder().id(i).name(faker.job().field()).description(faker.lorem().paragraph()).build())
-				.collect(Collectors.toList());
+		List<Category> fakeCategories = LongStream.rangeClosed(1, Constant.CATEGORY_NUMBER)
+				.mapToObj(this::createFakeCategory).collect(Collectors.toList());
 		repository.saveAll(fakeCategories);
+	}
+
+	private Category createFakeCategory(long i) {
+		return Category.builder().id(i).name(faker.job().field()).description(faker.lorem().paragraph()).build();
 	}
 
 }

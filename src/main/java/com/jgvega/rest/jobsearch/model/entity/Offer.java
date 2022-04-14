@@ -71,7 +71,7 @@ public class Offer extends CommonModel implements Serializable {
 	private EducationLevel minEducationLevel;
 	@ManyToOne(fetch = FetchType.LAZY)
 	private Category category;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true, mappedBy = "offer")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "offer")
 	private List<Application> applications;
 	@ManyToOne()
 	@JoinColumn(name = "enterprise_id")

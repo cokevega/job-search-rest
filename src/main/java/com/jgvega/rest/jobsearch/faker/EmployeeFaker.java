@@ -1,6 +1,7 @@
 package com.jgvega.rest.jobsearch.faker;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 import java.util.Locale.LanguageRange;
@@ -16,29 +17,49 @@ import org.springframework.stereotype.Component;
 import com.github.javafaker.Faker;
 import com.jgvega.rest.jobsearch.constant.Constant;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
+import com.jgvega.rest.jobsearch.model.entity.Education;
 import com.jgvega.rest.jobsearch.model.entity.Employee;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
+import com.jgvega.rest.jobsearch.service.EmployeeService;
 
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE+3)
+@Order(Ordered.HIGHEST_PRECEDENCE + 3)
 public class EmployeeFaker implements CommandLineRunner {
 
 	@Autowired
 	private IEmployeeRepository employeeRepository;
+	@Autowired
+	private EmployeeService employeeService;
 	private final Faker faker = Faker.instance(
 			Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
+	private List<Employee> fakerEmployees;
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<Employee> fakerEmployees = LongStream.rangeClosed(1, Constant.EMPLOYEE_NUMBER)
-				.mapToObj(i -> Employee.builder().born(faker.date().birthday(Constant.MIN_AGE, Constant.MAX_AGE))
-						.createAt(faker.date().birthday(0, Constant.FAKE_YEARS_APP))
-						.email(faker.internet().emailAddress()).id(i).name(faker.name().fullName())
-						.password(faker.internet().password()).phone(faker.phoneNumber().cellPhone())
-						.status(UserStatus.values()[faker.number().numberBetween(0, UserStatus.values().length)])
-						.build())
+		fakerEmployees = LongStream.rangeClosed(1, Constant.EMPLOYEE_NUMBER).mapToObj(this::createFakeEmployee)
 				.collect(Collectors.toList());
+		LongStream.rangeClosed(1, Constant.EDUCATION_NUMBER).forEach(this::createFakeEducation);
 		employeeRepository.saveAll(fakerEmployees);
+	}
+
+	private Employee createFakeEmployee(long i) {
+		return Employee.builder().born(faker.date().birthday(Constant.MIN_AGE, Constant.MAX_AGE))
+				.createAt(faker.date().birthday(0, Constant.FAKE_YEARS_APP)).email(faker.internet().emailAddress())
+				.id(i).name(faker.name().fullName()).password(faker.internet().password())
+				.phone(faker.phoneNumber().cellPhone())
+				.status(UserStatus.values()[faker.number().numberBetween(0, UserStatus.values().length)]).build();
+	}
+
+	private void createFakeEducation(long i) {
+		int index = faker.number().numberBetween(0, fakerEmployees.size());
+		Employee employee = fakerEmployees.get(index);
+		Date now = new Date();
+		Date beginDate = faker.date().between(employee.getBorn(), now);
+		Education fakeEducation = Education.builder().beginDate(beginDate).center(faker.educator().university())
+				.city(faker.address().city()).endDate(faker.date().between(beginDate, now)).id(i)
+				.name(faker.job().title()).build();
+		employee = employeeService.addEducation(employee, fakeEducation);
+		fakerEmployees.set(index, employee);
 	}
 
 }

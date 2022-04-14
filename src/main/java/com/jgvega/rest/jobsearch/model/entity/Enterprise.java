@@ -30,7 +30,7 @@ public class Enterprise extends UserDb implements Serializable {
 
 	private static final long serialVersionUID = -333134196983909116L;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY, mappedBy = "enterprise")
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "enterprise")
 	private List<Offer> offers;
 	@Length(max = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION)
 	@Column(length = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION, columnDefinition = "text")

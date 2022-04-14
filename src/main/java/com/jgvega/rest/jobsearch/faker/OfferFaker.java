@@ -40,22 +40,24 @@ public class OfferFaker implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		List<Offer> fakeOffers = LongStream.rangeClosed(1, Constant.OFFER_NUMBER).mapToObj(this::createFakeOffer)
+				.collect(Collectors.toList());
+		offerRepository.saveAll(fakeOffers);
+	}
+
+	private Offer createFakeOffer(long i) {
 		List<Category> categories = categoryRepository.findAll();
 		List<Enterprise> enterprises = enterpriseRepository.findAll();
-		int maxSalary = faker.number().numberBetween(0, Integer.MAX_VALUE);
-		List<Offer> fakeOffers = LongStream.rangeClosed(1, Constant.OFFER_NUMBER).mapToObj(i -> Offer.builder()
-				.category(categories.get(faker.number().numberBetween(0, categories.size())))
+		return Offer.builder().category(categories.get(faker.number().numberBetween(0, categories.size())))
 				.description(faker.lorem().paragraph().concat("\n" + faker.lorem().paragraph()))
 				.enterprise(enterprises.get(faker.number().numberBetween(0, enterprises.size()))).id(i)
-				.location(faker.address().city()).minSalary(faker.number().numberBetween(0, maxSalary))
-				.maxSalary(maxSalary)
+				.location(faker.address().city()).minSalary(faker.number().numberBetween(0, Constant.MIN_MAX_SALARY))
+				.maxSalary(faker.number().numberBetween(Constant.MIN_MAX_SALARY, Constant.MAX_MAX_SALARY))
 				.minEducationLevel(
 						EducationLevel.values()[faker.number().numberBetween(0, EducationLevel.values().length)])
 				.model(WorkModel.values()[faker.number().numberBetween(0, WorkModel.values().length)])
 				.name(faker.job().title())
-				.status(OfferStatus.values()[faker.number().numberBetween(0, OfferStatus.values().length)]).build())
-				.collect(Collectors.toList());
-		offerRepository.saveAll(fakeOffers);
+				.status(OfferStatus.values()[faker.number().numberBetween(0, OfferStatus.values().length)]).build();
 	}
 
 }

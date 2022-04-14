@@ -43,21 +43,20 @@ public class Employee extends UserDb implements Serializable {
 	@Column(nullable = false)
 	private Date born;
 	@Pattern(regexp = "^(\\d{3}(\\s|\\-|\\.)*){3}$", message = "Accepted formats:\n-XXXXXXXXX\n-XXX XXX XXX\n-XXX.XXX.XXX\n-XXX-XXX-XXX")
-	@Column(columnDefinition = "varchar("+Constant.MAX_PHONE_LENGTH+")")
+	@Column(columnDefinition = "varchar(" + Constant.MAX_PHONE_LENGTH + ")")
 	@Length(min = Constant.MIN_PHONE_LENGTH, max = Constant.MAX_PHONE_LENGTH)
 	private String phone;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "employee_id", nullable = false)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
 	private List<Education> education;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "employee_id", nullable = false)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
 	private List<Experience> experiences;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, orphanRemoval = true)
-	@JoinColumn(name = "employee_id", nullable = false)
+	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
 	private List<Skill> skills;
 	@ManyToMany(mappedBy = "employees")
 	private Set<Language> languages;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "employee")
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
 	private List<Application> applications;
-
 }
