@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.jgvega.rest.jobsearch.model.entity.Education;
 import com.jgvega.rest.jobsearch.model.entity.Employee;
+import com.jgvega.rest.jobsearch.model.entity.Experience;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
 
 @Service
@@ -20,6 +21,16 @@ public class EmployeeService {
 			employee.setEducation(new ArrayList<Education>());
 		if (!employee.getEducation().contains(education)) {
 			employee.getEducation().add(education);
+			return employeeRepository.save(employee);
+		}
+		return employee;
+	}
+	
+	public Employee addExperience(Employee employee, Experience experience) {
+		if(employee.getExperiences()==null)
+			employee.setExperiences(new ArrayList<Experience>());
+		if(!employee.getExperiences().contains(experience)) {
+			employee.getExperiences().add(experience);
 			return employeeRepository.save(employee);
 		}
 		return employee;

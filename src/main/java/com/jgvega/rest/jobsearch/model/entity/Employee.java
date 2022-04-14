@@ -18,9 +18,11 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.constant.Constant;
+import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.model.commons.UserDb;
 
 import lombok.Getter;
@@ -46,13 +48,16 @@ public class Employee extends UserDb implements Serializable {
 	@Column(columnDefinition = "varchar(" + Constant.MAX_PHONE_LENGTH + ")")
 	@Length(min = Constant.MIN_PHONE_LENGTH, max = Constant.MAX_PHONE_LENGTH)
 	private String phone;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
 	private List<Education> education;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
 	private List<Experience> experiences;
-	@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	@OneToMany(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
 	private List<Skill> skills;
 	@ManyToMany(mappedBy = "employees")

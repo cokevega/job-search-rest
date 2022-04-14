@@ -14,7 +14,7 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
-import com.jgvega.rest.jobsearch.constant.Constant;
+import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 import com.jgvega.rest.jobsearch.model.entity.Enterprise;
 import com.jgvega.rest.jobsearch.repository.IEnterpriseRepository;

@@ -11,7 +11,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.constant.Constant;
+import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

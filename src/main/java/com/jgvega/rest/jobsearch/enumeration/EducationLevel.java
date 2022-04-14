@@ -2,7 +2,7 @@ package com.jgvega.rest.jobsearch.enumeration;
 
 import java.io.Serializable;
 
-import com.jgvega.rest.jobsearch.constant.Constant;
+import com.jgvega.rest.jobsearch.util.Constant;
 
 public enum EducationLevel implements Serializable {
 	NONE {
