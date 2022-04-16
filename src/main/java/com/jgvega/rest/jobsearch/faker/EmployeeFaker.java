@@ -1,10 +1,7 @@
 package com.jgvega.rest.jobsearch.faker;
 
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
-import java.util.Locale;
-import java.util.Locale.LanguageRange;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -34,8 +31,7 @@ public class EmployeeFaker implements CommandLineRunner {
 	private IEmployeeRepository employeeRepository;
 	@Autowired
 	private EmployeeService employeeService;
-	private final Faker faker = Faker.instance(
-			Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
+	private final Faker faker = Faker.instance();
 	private List<Employee> fakerEmployees;
 
 	@Override
@@ -72,20 +68,22 @@ public class EmployeeFaker implements CommandLineRunner {
 		int index = faker.number().numberBetween(0, fakerEmployees.size());
 		Employee employee = fakerEmployees.get(index);
 		Date now = new Date();
-		Date beginDate = faker.date().between(Util.getDate(Util.getLocalDate(employee.getBorn()).plusYears(Constant.MIN_AGE)), now);
+		Date beginDate = faker.date()
+				.between(Util.getDate(Util.getLocalDate(employee.getBorn()).plusYears(Constant.MIN_AGE)), now);
 		Experience fakeExperience = Experience.builder().begin(beginDate).city(faker.address().city())
 				.end(faker.date().between(beginDate, now)).enterprise(faker.company().name()).id(i)
 				.name(faker.job().position()).build();
 		employee = employeeService.addExperience(employee, fakeExperience);
 		fakerEmployees.set(index, employee);
 	}
-	
+
 	private void createFakeSkill(long i) {
 		int index = faker.number().numberBetween(0, fakerEmployees.size());
 		Employee employee = fakerEmployees.get(index);
-		Skill fakeSkill=Skill.builder().id(i).level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
+		Skill fakeSkill = Skill.builder().id(i)
+				.level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
 				.name(faker.job().keySkills()).build();
-		employee=employeeService.addSkill(employee, fakeSkill);
+		employee = employeeService.addSkill(employee, fakeSkill);
 		fakerEmployees.set(index, employee);
 	}
 

@@ -1,9 +1,6 @@
 package com.jgvega.rest.jobsearch.faker;
 
-import java.util.Arrays;
 import java.util.List;
-import java.util.Locale;
-import java.util.Locale.LanguageRange;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
@@ -14,10 +11,10 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
-import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 import com.jgvega.rest.jobsearch.model.entity.Enterprise;
 import com.jgvega.rest.jobsearch.repository.IEnterpriseRepository;
+import com.jgvega.rest.jobsearch.util.Constant;
 
 @Component
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
@@ -25,8 +22,7 @@ public class EnterpriseFaker implements CommandLineRunner {
 
 	@Autowired
 	private IEnterpriseRepository enterpriseRepository;
-	private final Faker faker = Faker.instance(
-			Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
+	private final Faker faker = Faker.instance();
 
 	@Override
 	public void run(String... args) throws Exception {
