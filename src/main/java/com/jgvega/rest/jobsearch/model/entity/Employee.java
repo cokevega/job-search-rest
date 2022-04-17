@@ -3,13 +3,11 @@ package com.jgvega.rest.jobsearch.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -43,7 +41,7 @@ public class Employee extends UserDb implements Serializable {
 	@NotNull
 	@Column(nullable = false)
 	private Date born;
-	@Pattern(regexp = "^(\\d{3}(\\s|\\-|\\.)*){3}$", message = "Accepted formats:\n-XXXXXXXXX\n-XXX XXX XXX\n-XXX.XXX.XXX\n-XXX-XXX-XXX")
+	@Pattern(regexp = "^(\\(|\\)|\\-|\\s|\\d|\\.){9,16}$", message = "Incorrect phone format")
 	@Column(columnDefinition = "varchar(" + Constant.MAX_PHONE_LENGTH + ")")
 	@Length(min = Constant.MIN_PHONE_LENGTH, max = Constant.MAX_PHONE_LENGTH)
 	private String phone;
@@ -59,8 +57,9 @@ public class Employee extends UserDb implements Serializable {
 	@LazyCollection(LazyCollectionOption.FALSE)
 	@JoinColumn(name = "employee_id", nullable = false, referencedColumnName = "id")
 	private List<Skill> skills;
-	@ManyToMany(mappedBy = "employees")
-	private Set<Language> languages;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
 	private List<Application> applications;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<EmployeeLanguage> languages;
 }

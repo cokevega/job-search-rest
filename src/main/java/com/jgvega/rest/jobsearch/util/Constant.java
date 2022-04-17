@@ -73,7 +73,7 @@ public class Constant {
 	public static final int MIN_AGE = 18;
 	public static final int MAX_AGE = 65;
 	public static final int MIN_PHONE_LENGTH = 9;
-	public static final int MAX_PHONE_LENGTH = 12;
+	public static final int MAX_PHONE_LENGTH = 16;
 	/**
 	 * Education
 	 */

@@ -1,16 +1,14 @@
 package com.jgvega.rest.jobsearch.model.entity;
 
 import java.io.Serializable;
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.jgvega.rest.jobsearch.model.commons.Attribute;
+import com.jgvega.rest.jobsearch.model.commons.CommonModel;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,17 +21,12 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "language")
 @SuperBuilder
 @NoArgsConstructor
-public class Language extends Attribute implements Serializable {
+public class Language extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = 7696520098740984475L;
 
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "employee_language", joinColumns = { @JoinColumn(name = "language_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "employee_id") })
-	private Set<Employee> employees;
-	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
-	@JoinTable(name = "offer_language", joinColumns = { @JoinColumn(name = "language_id") }, inverseJoinColumns = {
-			@JoinColumn(name = "offer_id") })
-	private Set<Employee> offers;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+	private List<EmployeeLanguage> employees;
+
 
 }

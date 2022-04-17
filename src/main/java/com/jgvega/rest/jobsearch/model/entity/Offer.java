@@ -3,7 +3,6 @@ package com.jgvega.rest.jobsearch.model.entity;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -12,7 +11,6 @@ import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
@@ -24,11 +22,11 @@ import javax.validation.constraints.NotNull;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.enumeration.EducationLevel;
 import com.jgvega.rest.jobsearch.enumeration.OfferStatus;
 import com.jgvega.rest.jobsearch.enumeration.WorkModel;
 import com.jgvega.rest.jobsearch.model.commons.CommonModel;
+import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -80,8 +78,8 @@ public class Offer extends CommonModel implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private OfferStatus status;
-	@ManyToMany(mappedBy = "offers")
-	private Set<Language> languages;
+//	@ManyToMany(mappedBy = "offers")
+//	private Set<Language> languages;
 
 	@PrePersist
 	public void create_at() {

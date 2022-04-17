@@ -7,6 +7,7 @@ import java.util.stream.LongStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
@@ -24,7 +25,8 @@ import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.util.Util;
 
 @Component
-@Order(Ordered.HIGHEST_PRECEDENCE + 3)
+@Profile("data")
+@Order(Ordered.HIGHEST_PRECEDENCE + 1)
 public class EmployeeFaker implements CommandLineRunner {
 
 	@Autowired
