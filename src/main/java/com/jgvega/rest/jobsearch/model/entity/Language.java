@@ -14,6 +14,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
+import net.bytebuddy.asm.Advice.This;
 
 @Getter
 @Setter
@@ -28,5 +29,14 @@ public class Language extends CommonModel implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
 	private List<EmployeeLanguage> employees;
 
+	@Override
+	public boolean equals(Object obj) {
+		return ((Language)obj).getName().equals(this.getName());
+	}
+	
+	@Override
+	public int hashCode() {
+		return getName().hashCode();
+	}
 
 }

@@ -1,41 +1,53 @@
 package com.jgvega.rest.jobsearch.faker;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
-import org.springframework.web.client.RestTemplate;
 
 import com.jgvega.rest.jobsearch.model.entity.Language;
 import com.jgvega.rest.jobsearch.model.other.CountryResponse;
+import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
 import com.jgvega.rest.jobsearch.util.Util;
 
-//@Component
+@Component
 @Profile("data")
 @Order(Ordered.HIGHEST_PRECEDENCE)
 public class LanguageFaker implements CommandLineRunner {
 
-//	@Value("${languages.creation.endpoint.languages}")
-//	private String endpoint;
-//	private List<Language> languages;
+	@Autowired
+	private ILanguageRepository languageRepository;
+	@Value("${languages.creation.endpoint.languages}")
+	private String endpoint;
+	private Set<Language> languages;
 	
 	@Override
 	public void run(String... args) throws Exception {
-//		getCountries(endpoint);
+		languages=new HashSet<Language>();
+		getCountries(endpoint);
 	}
-//	
-//	private void getCountries(String endpoint) {
-//		 List<CountryResponse> countries=Arrays.asList(Util.getFromAnotherApi(endpoint, CountryResponse[].class));
-//		 countries.stream().forEach();
-//	}
-//	
-//	private Language convertLanguage(CountryResponse country) {
-//		return Language.builder().name(country.getla language.getName()).build();
-//	}
+	
+	private void getCountries(String endpoint) {
+		 Set<CountryResponse> countries=new HashSet<CountryResponse>(Arrays.asList(Util.getFromAnotherApi(endpoint, CountryResponse[].class)));
+		 countries.forEach(this::convertLanguage);
+		 languageRepository.saveAll(languages);
+	}
+	
+	private void convertLanguage(CountryResponse country) {
+		List<com.jgvega.rest.jobsearch.model.other.Language> countryLanguages=country.getLanguages();
+		for (com.jgvega.rest.jobsearch.model.other.Language language : countryLanguages) {
+			Language languageToAdd=Language.builder().name(language.getName()).build();
+			languages.add(languageToAdd);
+		}
+	}
 	
 }
