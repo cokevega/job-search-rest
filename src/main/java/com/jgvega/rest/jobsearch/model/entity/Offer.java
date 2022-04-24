@@ -9,7 +9,6 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
@@ -20,6 +19,8 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
 import com.jgvega.rest.jobsearch.enumeration.EducationLevel;
@@ -67,9 +68,11 @@ public class Offer extends CommonModel implements Serializable {
 	@Column(name = "min_education_level", nullable = false)
 	@Enumerated(EnumType.STRING)
 	private EducationLevel minEducationLevel;
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(cascade = CascadeType.ALL)
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private Category category;
 	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "offer")
+	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<Application> applications;
 	@ManyToOne()
 	@JoinColumn(name = "enterprise_id")
@@ -78,8 +81,9 @@ public class Offer extends CommonModel implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private OfferStatus status;
-//	@ManyToMany(mappedBy = "offers")
-//	private Set<Language> languages;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "offer")
+	@LazyCollection(LazyCollectionOption.FALSE)
+	private List<OfferLanguage> languages;
 
 	@PrePersist
 	public void create_at() {

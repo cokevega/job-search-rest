@@ -54,7 +54,6 @@ public class EmployeeFaker implements CommandLineRunner {
 				.collect(Collectors.toList());
 		employeeRepository.saveAll(fakerEmployees);
 		log.info("Fake employees created successfully");
-		// Usually, not all employees are persisted
 		fakerEmployees = employeeRepository.findAll();
 		LongStream.rangeClosed(1, Constant.EDUCATION_NUMBER).forEach(this::createFakeEducation);
 		log.info("Fake educations created successfully");
@@ -62,8 +61,8 @@ public class EmployeeFaker implements CommandLineRunner {
 		log.info("Fake experiences created successfully");
 		LongStream.rangeClosed(1, Constant.SKILL_NUMBER).forEach(this::createFakeSkill);
 		log.info("Fake skills created successfully");
-		LongStream.rangeClosed(1, Constant.LANGUAGE_NUMBER).forEach(this::createFakeLanguage);
-		log.info("Fake languages created successfully");
+		LongStream.rangeClosed(1, Constant.EMPLOYEE_LANGUAGE_NUMBER).forEach(this::createFakeLanguage);
+		log.info("Fake employees' languages created successfully");
 	}
 
 	private Employee createFakeEmployee(long i) {
@@ -93,8 +92,8 @@ public class EmployeeFaker implements CommandLineRunner {
 		Date beginDate = faker.date()
 				.between(Util.getDate(Util.getLocalDate(employee.getBorn()).plusYears(Constant.MIN_AGE)), now);
 		Experience fakeExperience = Experience.builder().begin(beginDate).city(faker.address().city())
-				.end(faker.date().between(beginDate, now)).enterprise(faker.company().name())
-				.name(faker.job().position()).build();
+				.comments(faker.lorem().paragraph()).end(faker.date().between(beginDate, now))
+				.enterprise(faker.company().name()).name(faker.job().position()).build();
 		employee = employeeService.addExperience(employee, fakeExperience);
 		fakerEmployees.set(index, employee);
 	}

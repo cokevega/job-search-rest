@@ -13,14 +13,21 @@ import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
 import com.jgvega.rest.jobsearch.enumeration.EducationLevel;
+import com.jgvega.rest.jobsearch.enumeration.Level;
 import com.jgvega.rest.jobsearch.enumeration.OfferStatus;
 import com.jgvega.rest.jobsearch.enumeration.WorkModel;
 import com.jgvega.rest.jobsearch.model.entity.Category;
 import com.jgvega.rest.jobsearch.model.entity.Enterprise;
+import com.jgvega.rest.jobsearch.model.entity.Language;
 import com.jgvega.rest.jobsearch.model.entity.Offer;
+import com.jgvega.rest.jobsearch.model.entity.OfferLanguage;
+import com.jgvega.rest.jobsearch.model.entity.key.OfferLanguageKey;
 import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
 import com.jgvega.rest.jobsearch.repository.IEnterpriseRepository;
+import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
+import com.jgvega.rest.jobsearch.repository.IOfferLanguageRepository;
 import com.jgvega.rest.jobsearch.repository.IOfferRepository;
+import com.jgvega.rest.jobsearch.service.OfferService;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.extern.slf4j.Slf4j;
@@ -37,19 +44,37 @@ public class OfferFaker implements CommandLineRunner {
 	private IEnterpriseRepository enterpriseRepository;
 	@Autowired
 	private IOfferRepository offerRepository;
+	@Autowired
+	private ILanguageRepository languageRepository;
+	@Autowired
+	private IOfferLanguageRepository offerLanguageRepository;
+	@Autowired
+	private OfferService offerService;
 	private final Faker faker = Faker.instance();
+	private List<Offer> fakeOffers;
+	private List<Category> categories;
+	private List<Enterprise> enterprises;
+	private List<Language> languages;
 
 	@Override
 	public void run(String... args) throws Exception {
-		List<Offer> fakeOffers = LongStream.rangeClosed(1, Constant.OFFER_NUMBER).mapToObj(this::createFakeOffer)
+		init();
+		fakeOffers = LongStream.rangeClosed(1, Constant.OFFER_NUMBER).mapToObj(this::createFakeOffer)
 				.collect(Collectors.toList());
 		offerRepository.saveAll(fakeOffers);
-		log.info("Fake offers created successfully");
+		log.info("Fake offers created successfully without languages");
+		fakeOffers = offerRepository.findAll();
+		LongStream.rangeClosed(1, Constant.OFFER_LANGUAGE_NUMBER).forEach(this::createFakeLanguage);
+		log.info("Fake offers' languages created successfully");
+	}
+
+	private void init() {
+		categories = categoryRepository.findAll();
+		enterprises = enterpriseRepository.findAll();
+		languages = languageRepository.findAll();
 	}
 
 	private Offer createFakeOffer(long i) {
-		List<Category> categories = categoryRepository.findAll();
-		List<Enterprise> enterprises = enterpriseRepository.findAll();
 		return Offer.builder().category(categories.get(faker.number().numberBetween(0, categories.size())))
 				.description(faker.lorem().paragraph().concat("\n" + faker.lorem().paragraph()))
 				.enterprise(enterprises.get(faker.number().numberBetween(0, enterprises.size()))).id(i)
@@ -60,6 +85,26 @@ public class OfferFaker implements CommandLineRunner {
 				.model(WorkModel.values()[faker.number().numberBetween(0, WorkModel.values().length)])
 				.name(faker.job().title())
 				.status(OfferStatus.values()[faker.number().numberBetween(0, OfferStatus.values().length)]).build();
+	}
+
+	private void createFakeLanguage(long i) {
+		int index, indexLanguage;
+		OfferLanguageKey offerLanguageKey;
+		do {
+			index = faker.number().numberBetween(0, fakeOffers.size());
+			indexLanguage = faker.number().numberBetween(0, languages.size());
+			offerLanguageKey = OfferLanguageKey.builder().languageId(languages.get(indexLanguage).getId())
+					.offerId(fakeOffers.get(index).getId()).build();
+		} while (offerLanguageRepository.findById(offerLanguageKey).isPresent());
+		Offer offer=fakeOffers.get(index);
+		Language language=languages.get(indexLanguage);
+		OfferLanguage offerLanguage=OfferLanguage.builder()
+				.id(offerLanguageKey).language(language)
+				.level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
+				.offer(offer)
+				.build();
+		offer=offerService.addLanguage(offer, offerLanguage);
+		fakeOffers.set(index, offer);
 	}
 
 }

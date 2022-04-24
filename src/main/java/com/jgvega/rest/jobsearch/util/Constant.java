@@ -38,7 +38,7 @@ public class Constant {
 	 * Global
 	 */
 	public static final int FAKE_YEARS_APP = 5;
-	public static final int MAX_LENGTH_CITY = 100; 
+	public static final int MAX_LENGTH_CITY = 100;
 	public static final int MAX_LENGTH_NAME = 100;
 	/**
 	 * Category
@@ -83,15 +83,16 @@ public class Constant {
 	/**
 	 * Experience
 	 */
-	public static final int EXPERIENCE_NUMBER=800;
-	public static final int MAX_LENGTH_COMMENTS=256;
+	public static final int EXPERIENCE_NUMBER = 800;
+	public static final int MAX_LENGTH_COMMENTS = 512;
 	/**
 	 * Skill
 	 */
-	public static final int SKILL_NUMBER=1000;
+	public static final int SKILL_NUMBER = 1000;
 	/**
 	 * Language
 	 */
-	public static final int LANGUAGE_NUMBER=400;
-	
+	public static final int EMPLOYEE_LANGUAGE_NUMBER = EMPLOYEE_NUMBER * 2;
+	public static final int OFFER_LANGUAGE_NUMBER = OFFER_NUMBER * 2;
+
 }

@@ -27,6 +27,9 @@ public class Language extends CommonModel implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
 	private List<EmployeeLanguage> employees;
+	
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+	private List<OfferLanguage> offers;
 
 	@Override
 	public boolean equals(Object obj) {
