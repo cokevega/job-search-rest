@@ -13,9 +13,9 @@ import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
-import com.jgvega.rest.jobsearch.model.entity.Language;
-import com.jgvega.rest.jobsearch.model.other.CountryResponse;
-import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
+import com.jgvega.rest.jobsearch.entity.Language;
+import com.jgvega.rest.jobsearch.model.CountryResponse;
+import com.jgvega.rest.jobsearch.service.ILanguageService;
 import com.jgvega.rest.jobsearch.util.Util;
 
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 public class LanguageFaker implements CommandLineRunner {
 
 	@Autowired
-	private ILanguageRepository languageRepository;
+	private ILanguageService service;
 	@Value("${languages.creation.endpoint.languages}")
 	private String endpoint;
 	private Set<Language> languages;
@@ -42,12 +42,12 @@ public class LanguageFaker implements CommandLineRunner {
 	private void getCountries(String endpoint) {
 		 Set<CountryResponse> countries=new HashSet<CountryResponse>(Arrays.asList(Util.getFromAnotherApi(endpoint, CountryResponse[].class)));
 		 countries.forEach(this::convertLanguage);
-		 languageRepository.saveAll(languages);
+		 service.saveAll(languages);
 	}
 	
 	private void convertLanguage(CountryResponse country) {
-		List<com.jgvega.rest.jobsearch.model.other.Language> countryLanguages=country.getLanguages();
-		for (com.jgvega.rest.jobsearch.model.other.Language language : countryLanguages) {
+		List<com.jgvega.rest.jobsearch.model.Language> countryLanguages=country.getLanguages();
+		for (com.jgvega.rest.jobsearch.model.Language language : countryLanguages) {
 			Language languageToAdd=Language.builder().name(language.getName()).build();
 			languages.add(languageToAdd);
 		}

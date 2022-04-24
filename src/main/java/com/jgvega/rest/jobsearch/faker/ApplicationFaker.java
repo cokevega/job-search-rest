@@ -13,13 +13,13 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
+import com.jgvega.rest.jobsearch.entity.Application;
+import com.jgvega.rest.jobsearch.entity.Employee;
+import com.jgvega.rest.jobsearch.entity.Offer;
 import com.jgvega.rest.jobsearch.enumeration.ApplicationStatus;
-import com.jgvega.rest.jobsearch.model.entity.Application;
-import com.jgvega.rest.jobsearch.model.entity.Employee;
-import com.jgvega.rest.jobsearch.model.entity.Offer;
-import com.jgvega.rest.jobsearch.repository.IApplicationRepository;
-import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
-import com.jgvega.rest.jobsearch.repository.IOfferRepository;
+import com.jgvega.rest.jobsearch.service.IApplicationService;
+import com.jgvega.rest.jobsearch.service.IEmployeeService;
+import com.jgvega.rest.jobsearch.service.IOfferService;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.extern.slf4j.Slf4j;
@@ -31,11 +31,11 @@ import lombok.extern.slf4j.Slf4j;
 public class ApplicationFaker implements CommandLineRunner {
 
 	@Autowired
-	private IApplicationRepository applicationRepository;
+	private IApplicationService service;
 	@Autowired
-	private IEmployeeRepository employeeRepository;
+	private IEmployeeService employeeService;
 	@Autowired
-	private IOfferRepository offerRepository;
+	private IOfferService offerService;
 	private final Faker faker = Faker.instance();
 	private List<Application> fakeApplications;
 	private List<Employee> employees;
@@ -46,13 +46,13 @@ public class ApplicationFaker implements CommandLineRunner {
 		init();
 		fakeApplications = LongStream.rangeClosed(1, Constant.APPLICATION_NUMBER).mapToObj(this::createFakeApplication)
 				.collect(Collectors.toList());
-		applicationRepository.saveAll(fakeApplications);
+		service.saveAll(fakeApplications);
 		log.info("Fake applications created successfully");
 	}
 
 	private void init() {
-		employees = employeeRepository.findAll();
-		offers = offerRepository.findAll();
+		employees = employeeService.findAll();
+		offers = offerService.findAll();
 	}
 
 	private Application createFakeApplication(long i) {

@@ -13,19 +13,19 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
+import com.jgvega.rest.jobsearch.entity.Education;
+import com.jgvega.rest.jobsearch.entity.Employee;
+import com.jgvega.rest.jobsearch.entity.EmployeeLanguage;
+import com.jgvega.rest.jobsearch.entity.Experience;
+import com.jgvega.rest.jobsearch.entity.Language;
+import com.jgvega.rest.jobsearch.entity.Skill;
+import com.jgvega.rest.jobsearch.entity.key.EmployeeLanguageKey;
 import com.jgvega.rest.jobsearch.enumeration.Level;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
-import com.jgvega.rest.jobsearch.model.entity.Education;
-import com.jgvega.rest.jobsearch.model.entity.Employee;
-import com.jgvega.rest.jobsearch.model.entity.EmployeeLanguage;
-import com.jgvega.rest.jobsearch.model.entity.Experience;
-import com.jgvega.rest.jobsearch.model.entity.Language;
-import com.jgvega.rest.jobsearch.model.entity.Skill;
-import com.jgvega.rest.jobsearch.model.entity.key.EmployeeLanguageKey;
-import com.jgvega.rest.jobsearch.repository.IEmployeeLanguageRepository;
-import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
-import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
-import com.jgvega.rest.jobsearch.service.EmployeeService;
+import com.jgvega.rest.jobsearch.service.IEmployeeLanguageService;
+import com.jgvega.rest.jobsearch.service.IEmployeeService;
+import com.jgvega.rest.jobsearch.service.ILanguageService;
+import com.jgvega.rest.jobsearch.service.impl.EmployeeService;
 import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.util.Util;
 
@@ -38,11 +38,11 @@ import lombok.extern.slf4j.Slf4j;
 public class EmployeeFaker implements CommandLineRunner {
 
 	@Autowired
-	private IEmployeeRepository employeeRepository;
+	private IEmployeeService service;
 	@Autowired
-	private ILanguageRepository languageRepository;
+	private ILanguageService languageService;
 	@Autowired
-	private IEmployeeLanguageRepository employeeLanguageRepository;
+	private IEmployeeLanguageService employeeLanguageService;
 	@Autowired
 	private EmployeeService employeeService;
 	private final Faker faker = Faker.instance();
@@ -52,9 +52,9 @@ public class EmployeeFaker implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		fakerEmployees = LongStream.rangeClosed(1, Constant.EMPLOYEE_NUMBER).mapToObj(this::createFakeEmployee)
 				.collect(Collectors.toList());
-		employeeRepository.saveAll(fakerEmployees);
+		service.saveAll(fakerEmployees);
 		log.info("Fake employees created successfully");
-		fakerEmployees = employeeRepository.findAll();
+		fakerEmployees = service.findAll();
 		LongStream.rangeClosed(1, Constant.EDUCATION_NUMBER).forEach(this::createFakeEducation);
 		log.info("Fake educations created successfully");
 		LongStream.rangeClosed(1, Constant.EXPERIENCE_NUMBER).forEach(this::createFakeExperience);
@@ -110,13 +110,13 @@ public class EmployeeFaker implements CommandLineRunner {
 	private void createFakeLanguage(long i) {
 		int index, indexLanguage;
 		EmployeeLanguageKey employeeLanguageKey;
-		List<Language> languages = languageRepository.findAll();
+		List<Language> languages = languageService.findAll();
 		do {
 			index = faker.number().numberBetween(0, fakerEmployees.size());
 			indexLanguage = faker.number().numberBetween(1, languages.size());
 			employeeLanguageKey = EmployeeLanguageKey.builder().employeeId(fakerEmployees.get(index).getId())
 					.languageId(languages.get(indexLanguage).getId()).build();
-		} while (employeeLanguageRepository.findById(employeeLanguageKey).isPresent());
+		} while (employeeLanguageService.findById(employeeLanguageKey).isPresent());
 		Employee employee = fakerEmployees.get(index);
 		Language language = languages.get(indexLanguage);
 		EmployeeLanguage employeeLanguage = EmployeeLanguage.builder().id(employeeLanguageKey).employee(employee)

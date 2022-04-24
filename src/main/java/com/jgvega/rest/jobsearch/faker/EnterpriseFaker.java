@@ -12,9 +12,9 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
+import com.jgvega.rest.jobsearch.entity.Enterprise;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
-import com.jgvega.rest.jobsearch.model.entity.Enterprise;
-import com.jgvega.rest.jobsearch.repository.IEnterpriseRepository;
+import com.jgvega.rest.jobsearch.service.IEnterpriseService;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.extern.slf4j.Slf4j;
@@ -26,14 +26,14 @@ import lombok.extern.slf4j.Slf4j;
 public class EnterpriseFaker implements CommandLineRunner {
 
 	@Autowired
-	private IEnterpriseRepository enterpriseRepository;
+	private IEnterpriseService service;
 	private final Faker faker = Faker.instance();
 
 	@Override
 	public void run(String... args) throws Exception {
 		List<Enterprise> fakerEnterprises = LongStream.rangeClosed(1, Constant.ENTERPRISE_NUMBER)
 				.mapToObj(this::createFakeEnterprise).collect(Collectors.toList());
-		enterpriseRepository.saveAll(fakerEnterprises);
+		service.saveAll(fakerEnterprises);
 		log.info("Fake enterprises created successfully");
 	}
 

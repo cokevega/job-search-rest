@@ -12,8 +12,8 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
-import com.jgvega.rest.jobsearch.model.entity.Category;
-import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
+import com.jgvega.rest.jobsearch.entity.Category;
+import com.jgvega.rest.jobsearch.service.ICategoryService;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.extern.slf4j.Slf4j;
@@ -32,13 +32,13 @@ public class CategoryFaker implements CommandLineRunner {
 	
 	private final Faker faker = Faker.instance();
 	@Autowired
-	private ICategoryRepository repository;
+	private ICategoryService service;
 
 	@Override
 	public void run(String... args) throws Exception {
 		List<Category> fakeCategories = LongStream.rangeClosed(1, Constant.CATEGORY_NUMBER)
 				.mapToObj(this::createFakeCategory).collect(Collectors.toList());
-		repository.saveAll(fakeCategories);
+		service.saveAll(fakeCategories);
 		log.info("Fake categories created successfully");
 	}
 

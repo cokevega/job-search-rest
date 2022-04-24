@@ -12,22 +12,22 @@ import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import com.github.javafaker.Faker;
+import com.jgvega.rest.jobsearch.entity.Category;
+import com.jgvega.rest.jobsearch.entity.Enterprise;
+import com.jgvega.rest.jobsearch.entity.Language;
+import com.jgvega.rest.jobsearch.entity.Offer;
+import com.jgvega.rest.jobsearch.entity.OfferLanguage;
+import com.jgvega.rest.jobsearch.entity.key.OfferLanguageKey;
 import com.jgvega.rest.jobsearch.enumeration.EducationLevel;
 import com.jgvega.rest.jobsearch.enumeration.Level;
 import com.jgvega.rest.jobsearch.enumeration.OfferStatus;
 import com.jgvega.rest.jobsearch.enumeration.WorkModel;
-import com.jgvega.rest.jobsearch.model.entity.Category;
-import com.jgvega.rest.jobsearch.model.entity.Enterprise;
-import com.jgvega.rest.jobsearch.model.entity.Language;
-import com.jgvega.rest.jobsearch.model.entity.Offer;
-import com.jgvega.rest.jobsearch.model.entity.OfferLanguage;
-import com.jgvega.rest.jobsearch.model.entity.key.OfferLanguageKey;
-import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
-import com.jgvega.rest.jobsearch.repository.IEnterpriseRepository;
-import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
-import com.jgvega.rest.jobsearch.repository.IOfferLanguageRepository;
-import com.jgvega.rest.jobsearch.repository.IOfferRepository;
-import com.jgvega.rest.jobsearch.service.OfferService;
+import com.jgvega.rest.jobsearch.service.ICategoryService;
+import com.jgvega.rest.jobsearch.service.IEnterpriseService;
+import com.jgvega.rest.jobsearch.service.ILanguageService;
+import com.jgvega.rest.jobsearch.service.IOfferLanguageService;
+import com.jgvega.rest.jobsearch.service.IOfferService;
+import com.jgvega.rest.jobsearch.service.impl.OfferService;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.extern.slf4j.Slf4j;
@@ -39,15 +39,15 @@ import lombok.extern.slf4j.Slf4j;
 public class OfferFaker implements CommandLineRunner {
 
 	@Autowired
-	private ICategoryRepository categoryRepository;
+	private ICategoryService categoryService;
 	@Autowired
-	private IEnterpriseRepository enterpriseRepository;
+	private IEnterpriseService enterpriseService;
 	@Autowired
-	private IOfferRepository offerRepository;
+	private IOfferService service;
 	@Autowired
-	private ILanguageRepository languageRepository;
+	private ILanguageService languageService;
 	@Autowired
-	private IOfferLanguageRepository offerLanguageRepository;
+	private IOfferLanguageService offerLanguageService;
 	@Autowired
 	private OfferService offerService;
 	private final Faker faker = Faker.instance();
@@ -61,17 +61,17 @@ public class OfferFaker implements CommandLineRunner {
 		init();
 		fakeOffers = LongStream.rangeClosed(1, Constant.OFFER_NUMBER).mapToObj(this::createFakeOffer)
 				.collect(Collectors.toList());
-		offerRepository.saveAll(fakeOffers);
+		service.saveAll(fakeOffers);
 		log.info("Fake offers created successfully without languages");
-		fakeOffers = offerRepository.findAll();
+		fakeOffers = service.findAll();
 		LongStream.rangeClosed(1, Constant.OFFER_LANGUAGE_NUMBER).forEach(this::createFakeLanguage);
 		log.info("Fake offers' languages created successfully");
 	}
 
 	private void init() {
-		categories = categoryRepository.findAll();
-		enterprises = enterpriseRepository.findAll();
-		languages = languageRepository.findAll();
+		categories = categoryService.findAll();
+		enterprises = enterpriseService.findAll();
+		languages = languageService.findAll();
 	}
 
 	private Offer createFakeOffer(long i) {
@@ -95,7 +95,7 @@ public class OfferFaker implements CommandLineRunner {
 			indexLanguage = faker.number().numberBetween(0, languages.size());
 			offerLanguageKey = OfferLanguageKey.builder().languageId(languages.get(indexLanguage).getId())
 					.offerId(fakeOffers.get(index).getId()).build();
-		} while (offerLanguageRepository.findById(offerLanguageKey).isPresent());
+		} while (offerLanguageService.findById(offerLanguageKey).isPresent());
 		Offer offer=fakeOffers.get(index);
 		Language language=languages.get(indexLanguage);
 		OfferLanguage offerLanguage=OfferLanguage.builder()
