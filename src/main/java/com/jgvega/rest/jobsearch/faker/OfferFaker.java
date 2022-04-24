@@ -23,9 +23,12 @@ import com.jgvega.rest.jobsearch.repository.IEnterpriseRepository;
 import com.jgvega.rest.jobsearch.repository.IOfferRepository;
 import com.jgvega.rest.jobsearch.util.Constant;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Profile("data")
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
+@Slf4j
 public class OfferFaker implements CommandLineRunner {
 
 	@Autowired
@@ -41,6 +44,7 @@ public class OfferFaker implements CommandLineRunner {
 		List<Offer> fakeOffers = LongStream.rangeClosed(1, Constant.OFFER_NUMBER).mapToObj(this::createFakeOffer)
 				.collect(Collectors.toList());
 		offerRepository.saveAll(fakeOffers);
+		log.info("Fake offers created successfully");
 	}
 
 	private Offer createFakeOffer(long i) {

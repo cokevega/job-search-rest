@@ -29,9 +29,12 @@ import com.jgvega.rest.jobsearch.service.EmployeeService;
 import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.util.Util;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Profile("data")
 @Order(Ordered.HIGHEST_PRECEDENCE + 1)
+@Slf4j
 public class EmployeeFaker implements CommandLineRunner {
 
 	@Autowired
@@ -50,13 +53,17 @@ public class EmployeeFaker implements CommandLineRunner {
 		fakerEmployees = LongStream.rangeClosed(1, Constant.EMPLOYEE_NUMBER).mapToObj(this::createFakeEmployee)
 				.collect(Collectors.toList());
 		employeeRepository.saveAll(fakerEmployees);
+		log.info("Fake employees created successfully");
 		// Usually, not all employees are persisted
 		fakerEmployees = employeeRepository.findAll();
 		LongStream.rangeClosed(1, Constant.EDUCATION_NUMBER).forEach(this::createFakeEducation);
+		log.info("Fake educations created successfully");
 		LongStream.rangeClosed(1, Constant.EXPERIENCE_NUMBER).forEach(this::createFakeExperience);
+		log.info("Fake experiences created successfully");
 		LongStream.rangeClosed(1, Constant.SKILL_NUMBER).forEach(this::createFakeSkill);
+		log.info("Fake skills created successfully");
 		LongStream.rangeClosed(1, Constant.LANGUAGE_NUMBER).forEach(this::createFakeLanguage);
-		employeeRepository.saveAll(fakerEmployees);
+		log.info("Fake languages created successfully");
 	}
 
 	private Employee createFakeEmployee(long i) {

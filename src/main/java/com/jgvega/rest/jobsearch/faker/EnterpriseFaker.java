@@ -17,9 +17,12 @@ import com.jgvega.rest.jobsearch.model.entity.Enterprise;
 import com.jgvega.rest.jobsearch.repository.IEnterpriseRepository;
 import com.jgvega.rest.jobsearch.util.Constant;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Profile("data")
 @Order(Ordered.HIGHEST_PRECEDENCE)
+@Slf4j
 public class EnterpriseFaker implements CommandLineRunner {
 
 	@Autowired
@@ -31,6 +34,7 @@ public class EnterpriseFaker implements CommandLineRunner {
 		List<Enterprise> fakerEnterprises = LongStream.rangeClosed(1, Constant.ENTERPRISE_NUMBER)
 				.mapToObj(this::createFakeEnterprise).collect(Collectors.toList());
 		enterpriseRepository.saveAll(fakerEnterprises);
+		log.info("Fake enterprises created successfully");
 	}
 
 	private Enterprise createFakeEnterprise(long i) {

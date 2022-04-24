@@ -18,9 +18,12 @@ import com.jgvega.rest.jobsearch.model.other.CountryResponse;
 import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
 import com.jgvega.rest.jobsearch.util.Util;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Profile("data")
 @Order(Ordered.HIGHEST_PRECEDENCE)
+@Slf4j
 public class LanguageFaker implements CommandLineRunner {
 
 	@Autowired
@@ -33,6 +36,7 @@ public class LanguageFaker implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		languages=new HashSet<Language>();
 		getCountries(endpoint);
+		log.info("Languages from API persisted successfully");
 	}
 	
 	private void getCountries(String endpoint) {

@@ -16,9 +16,12 @@ import com.jgvega.rest.jobsearch.model.entity.Category;
 import com.jgvega.rest.jobsearch.repository.ICategoryRepository;
 import com.jgvega.rest.jobsearch.util.Constant;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Component
 @Profile("data")
 @Order(Ordered.HIGHEST_PRECEDENCE)
+@Slf4j
 public class CategoryFaker implements CommandLineRunner {
 
 	/**
@@ -36,6 +39,7 @@ public class CategoryFaker implements CommandLineRunner {
 		List<Category> fakeCategories = LongStream.rangeClosed(1, Constant.CATEGORY_NUMBER)
 				.mapToObj(this::createFakeCategory).collect(Collectors.toList());
 		repository.saveAll(fakeCategories);
+		log.info("Fake categories created successfully");
 	}
 
 	private Category createFakeCategory(long i) {
