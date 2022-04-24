@@ -9,6 +9,7 @@ import com.jgvega.rest.jobsearch.model.entity.Education;
 import com.jgvega.rest.jobsearch.model.entity.Employee;
 import com.jgvega.rest.jobsearch.model.entity.Experience;
 import com.jgvega.rest.jobsearch.model.entity.Skill;
+import com.jgvega.rest.jobsearch.repository.IEmployeeLanguageRepository;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
 
 @Service

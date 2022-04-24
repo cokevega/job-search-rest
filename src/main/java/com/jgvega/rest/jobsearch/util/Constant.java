@@ -89,4 +89,9 @@ public class Constant {
 	 * Skill
 	 */
 	public static final int SKILL_NUMBER=1000;
+	/**
+	 * Language
+	 */
+	public static final int LANGUAGE_NUMBER=300;
+	
 }

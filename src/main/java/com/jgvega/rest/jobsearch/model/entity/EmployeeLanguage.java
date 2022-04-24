@@ -16,21 +16,21 @@ import javax.validation.constraints.NotNull;
 import com.jgvega.rest.jobsearch.enumeration.Level;
 import com.jgvega.rest.jobsearch.model.entity.key.EmployeeLanguageKey;
 
+import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "employee_language")
 @Getter
 @Setter
-@NoArgsConstructor
+@Builder
 public class EmployeeLanguage implements Serializable {
 
 	private static final long serialVersionUID = -1187709929923570265L;
 
 	@EmbeddedId
-	private EmployeeLanguageKey id;
+	private EmployeeLanguageKey id=new EmployeeLanguageKey();
 	@NotNull
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)

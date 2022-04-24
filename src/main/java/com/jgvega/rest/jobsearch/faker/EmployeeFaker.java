@@ -17,9 +17,13 @@ import com.jgvega.rest.jobsearch.enumeration.Level;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 import com.jgvega.rest.jobsearch.model.entity.Education;
 import com.jgvega.rest.jobsearch.model.entity.Employee;
+import com.jgvega.rest.jobsearch.model.entity.EmployeeLanguage;
 import com.jgvega.rest.jobsearch.model.entity.Experience;
+import com.jgvega.rest.jobsearch.model.entity.Language;
 import com.jgvega.rest.jobsearch.model.entity.Skill;
+import com.jgvega.rest.jobsearch.repository.IEmployeeLanguageRepository;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
+import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
 import com.jgvega.rest.jobsearch.service.EmployeeService;
 import com.jgvega.rest.jobsearch.util.Constant;
 import com.jgvega.rest.jobsearch.util.Util;
@@ -32,6 +36,10 @@ public class EmployeeFaker implements CommandLineRunner {
 	@Autowired
 	private IEmployeeRepository employeeRepository;
 	@Autowired
+	private ILanguageRepository languageRepository;
+	@Autowired
+	private IEmployeeLanguageRepository employeeLanguageRepository;
+	@Autowired
 	private EmployeeService employeeService;
 	private final Faker faker = Faker.instance();
 	private List<Employee> fakerEmployees;
@@ -43,13 +51,16 @@ public class EmployeeFaker implements CommandLineRunner {
 		LongStream.rangeClosed(1, Constant.EDUCATION_NUMBER).forEach(this::createFakeEducation);
 		LongStream.rangeClosed(1, Constant.EXPERIENCE_NUMBER).forEach(this::createFakeExperience);
 		LongStream.rangeClosed(1, Constant.SKILL_NUMBER).forEach(this::createFakeSkill);
+		LongStream.rangeClosed(1, Constant.LANGUAGE_NUMBER).forEach(this::createFakeLanguage);
 		employeeRepository.saveAll(fakerEmployees);
+		//Not all employees are persisted
+		fakerEmployees=employeeRepository.findAll();
 	}
 
 	private Employee createFakeEmployee(long i) {
 		return Employee.builder().born(faker.date().birthday(Constant.MIN_AGE, Constant.MAX_AGE))
 				.createAt(faker.date().birthday(0, Constant.FAKE_YEARS_APP)).email(faker.internet().emailAddress())
-				.id(i).name(faker.name().fullName()).password(faker.internet().password())
+				.name(faker.name().fullName()).password(faker.internet().password())
 				.phone(faker.phoneNumber().cellPhone())
 				.status(UserStatus.values()[faker.number().numberBetween(0, UserStatus.values().length)]).build();
 	}
@@ -60,7 +71,7 @@ public class EmployeeFaker implements CommandLineRunner {
 		Date now = new Date();
 		Date beginDate = faker.date().between(employee.getBorn(), now);
 		Education fakeEducation = Education.builder().beginDate(beginDate).center(faker.educator().university())
-				.city(faker.address().city()).endDate(faker.date().between(beginDate, now)).id(i)
+				.city(faker.address().city()).endDate(faker.date().between(beginDate, now))
 				.name(faker.job().title()).build();
 		employee = employeeService.addEducation(employee, fakeEducation);
 		fakerEmployees.set(index, employee);
@@ -73,7 +84,7 @@ public class EmployeeFaker implements CommandLineRunner {
 		Date beginDate = faker.date()
 				.between(Util.getDate(Util.getLocalDate(employee.getBorn()).plusYears(Constant.MIN_AGE)), now);
 		Experience fakeExperience = Experience.builder().begin(beginDate).city(faker.address().city())
-				.end(faker.date().between(beginDate, now)).enterprise(faker.company().name()).id(i)
+				.end(faker.date().between(beginDate, now)).enterprise(faker.company().name())
 				.name(faker.job().position()).build();
 		employee = employeeService.addExperience(employee, fakeExperience);
 		fakerEmployees.set(index, employee);
@@ -82,11 +93,21 @@ public class EmployeeFaker implements CommandLineRunner {
 	private void createFakeSkill(long i) {
 		int index = faker.number().numberBetween(0, fakerEmployees.size());
 		Employee employee = fakerEmployees.get(index);
-		Skill fakeSkill = Skill.builder().id(i)
+		Skill fakeSkill = Skill.builder()
 				.level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
 				.name(faker.job().keySkills()).build();
 		employee = employeeService.addSkill(employee, fakeSkill);
 		fakerEmployees.set(index, employee);
+	}
+	
+	private void createFakeLanguage(long i) {
+		int index = faker.number().numberBetween(0, fakerEmployees.size());
+		int indexLanguage=faker.number().numberBetween(0, (int)languageRepository.count());
+		Employee employee = fakerEmployees.get(index);
+		Language language=languageRepository.findById((long)indexLanguage).get();
+		EmployeeLanguage employeeLanguage=EmployeeLanguage.builder().employee(employee).language(language)
+				.level(Level.values()[faker.number().numberBetween(0, Level.values().length)]).build();
+		employeeLanguageRepository.save(employeeLanguage);
 	}
 
 }
