@@ -21,6 +21,7 @@ import com.jgvega.rest.jobsearch.model.entity.EmployeeLanguage;
 import com.jgvega.rest.jobsearch.model.entity.Experience;
 import com.jgvega.rest.jobsearch.model.entity.Language;
 import com.jgvega.rest.jobsearch.model.entity.Skill;
+import com.jgvega.rest.jobsearch.model.entity.key.EmployeeLanguageKey;
 import com.jgvega.rest.jobsearch.repository.IEmployeeLanguageRepository;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
 import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
@@ -48,13 +49,14 @@ public class EmployeeFaker implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		fakerEmployees = LongStream.rangeClosed(1, Constant.EMPLOYEE_NUMBER).mapToObj(this::createFakeEmployee)
 				.collect(Collectors.toList());
+		employeeRepository.saveAll(fakerEmployees);
+		// Usually, not all employees are persisted
+		fakerEmployees = employeeRepository.findAll();
 		LongStream.rangeClosed(1, Constant.EDUCATION_NUMBER).forEach(this::createFakeEducation);
 		LongStream.rangeClosed(1, Constant.EXPERIENCE_NUMBER).forEach(this::createFakeExperience);
 		LongStream.rangeClosed(1, Constant.SKILL_NUMBER).forEach(this::createFakeSkill);
 		LongStream.rangeClosed(1, Constant.LANGUAGE_NUMBER).forEach(this::createFakeLanguage);
 		employeeRepository.saveAll(fakerEmployees);
-		//Not all employees are persisted
-		fakerEmployees=employeeRepository.findAll();
 	}
 
 	private Employee createFakeEmployee(long i) {
@@ -71,8 +73,8 @@ public class EmployeeFaker implements CommandLineRunner {
 		Date now = new Date();
 		Date beginDate = faker.date().between(employee.getBorn(), now);
 		Education fakeEducation = Education.builder().beginDate(beginDate).center(faker.educator().university())
-				.city(faker.address().city()).endDate(faker.date().between(beginDate, now))
-				.name(faker.job().title()).build();
+				.city(faker.address().city()).endDate(faker.date().between(beginDate, now)).name(faker.job().title())
+				.build();
 		employee = employeeService.addEducation(employee, fakeEducation);
 		fakerEmployees.set(index, employee);
 	}
@@ -93,21 +95,28 @@ public class EmployeeFaker implements CommandLineRunner {
 	private void createFakeSkill(long i) {
 		int index = faker.number().numberBetween(0, fakerEmployees.size());
 		Employee employee = fakerEmployees.get(index);
-		Skill fakeSkill = Skill.builder()
-				.level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
+		Skill fakeSkill = Skill.builder().level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
 				.name(faker.job().keySkills()).build();
 		employee = employeeService.addSkill(employee, fakeSkill);
 		fakerEmployees.set(index, employee);
 	}
-	
-	private void createFakeLanguage(long i) {
-		int index = faker.number().numberBetween(0, fakerEmployees.size());
-		int indexLanguage=faker.number().numberBetween(0, (int)languageRepository.count());
-		Employee employee = fakerEmployees.get(index);
-		Language language=languageRepository.findById((long)indexLanguage).get();
-		EmployeeLanguage employeeLanguage=EmployeeLanguage.builder().employee(employee).language(language)
-				.level(Level.values()[faker.number().numberBetween(0, Level.values().length)]).build();
-		employeeLanguageRepository.save(employeeLanguage);
-	}
 
+	private void createFakeLanguage(long i) {
+		int index, indexLanguage;
+		EmployeeLanguageKey employeeLanguageKey;
+		List<Language> languages = languageRepository.findAll();
+		do {
+			index = faker.number().numberBetween(0, fakerEmployees.size());
+			indexLanguage = faker.number().numberBetween(1, languages.size());
+			employeeLanguageKey = EmployeeLanguageKey.builder().employeeId(fakerEmployees.get(index).getId())
+					.languageId(languages.get(indexLanguage).getId()).build();
+		} while (employeeLanguageRepository.findById(employeeLanguageKey).isPresent());
+		Employee employee = fakerEmployees.get(index);
+		Language language = languages.get(indexLanguage);
+		EmployeeLanguage employeeLanguage = EmployeeLanguage.builder().id(employeeLanguageKey).employee(employee)
+				.language(language).level(Level.values()[faker.number().numberBetween(0, Level.values().length)])
+				.build();
+		employee = employeeService.addLanguage(employee, employeeLanguage);
+		fakerEmployees.set(index, employee);
+	}
 }

@@ -7,9 +7,9 @@ import org.springframework.stereotype.Service;
 
 import com.jgvega.rest.jobsearch.model.entity.Education;
 import com.jgvega.rest.jobsearch.model.entity.Employee;
+import com.jgvega.rest.jobsearch.model.entity.EmployeeLanguage;
 import com.jgvega.rest.jobsearch.model.entity.Experience;
 import com.jgvega.rest.jobsearch.model.entity.Skill;
-import com.jgvega.rest.jobsearch.repository.IEmployeeLanguageRepository;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
 
 @Service
@@ -43,6 +43,16 @@ public class EmployeeService {
 			employee.setSkills(new ArrayList<Skill>());
 		if (!employee.getSkills().contains(skill)) {
 			employee.getSkills().add(skill);
+			return employeeRepository.save(employee);
+		}
+		return employee;
+	}
+
+	public Employee addLanguage(Employee employee, EmployeeLanguage employeeLanguage) {
+		if (employee.getLanguages() == null)
+			employee.setLanguages(new ArrayList<EmployeeLanguage>());
+		if (!employee.getLanguages().contains(employeeLanguage)) {
+			employee.getLanguages().add(employeeLanguage);
 			return employeeRepository.save(employee);
 		}
 		return employee;

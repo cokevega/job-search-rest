@@ -16,8 +16,10 @@ import javax.validation.constraints.NotNull;
 import com.jgvega.rest.jobsearch.enumeration.Level;
 import com.jgvega.rest.jobsearch.model.entity.key.EmployeeLanguageKey;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
@@ -25,12 +27,14 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class EmployeeLanguage implements Serializable {
 
 	private static final long serialVersionUID = -1187709929923570265L;
 
 	@EmbeddedId
-	private EmployeeLanguageKey id=new EmployeeLanguageKey();
+	private EmployeeLanguageKey id;
 	@NotNull
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -43,5 +47,5 @@ public class EmployeeLanguage implements Serializable {
 	@MapsId("languageId")
 	@JoinColumn(name = "language_id")
 	private Language language;
-	
+
 }

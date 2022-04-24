@@ -22,7 +22,7 @@ import com.jgvega.rest.jobsearch.util.Constant;
 public class CategoryFaker implements CommandLineRunner {
 
 	/**
-	 * Spanish
+	 * Spanish // UK English // American English
 	 */
 //	private final Faker faker = Faker.instance(
 //			Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));

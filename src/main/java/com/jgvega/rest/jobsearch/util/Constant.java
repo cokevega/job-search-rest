@@ -92,6 +92,6 @@ public class Constant {
 	/**
 	 * Language
 	 */
-	public static final int LANGUAGE_NUMBER=300;
+	public static final int LANGUAGE_NUMBER=400;
 	
 }
