@@ -1,0 +1,68 @@
+package com.jgvega.rest.jobsearch.faker;
+
+import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.LongStream;
+
+import org.apache.commons.lang3.StringUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
+import org.springframework.core.Ordered;
+import org.springframework.core.annotation.Order;
+import org.springframework.stereotype.Component;
+
+import com.github.javafaker.Faker;
+import com.jgvega.rest.jobsearch.enumeration.ApplicationStatus;
+import com.jgvega.rest.jobsearch.model.entity.Application;
+import com.jgvega.rest.jobsearch.model.entity.Employee;
+import com.jgvega.rest.jobsearch.model.entity.Offer;
+import com.jgvega.rest.jobsearch.repository.IApplicationRepository;
+import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
+import com.jgvega.rest.jobsearch.repository.IOfferRepository;
+import com.jgvega.rest.jobsearch.util.Constant;
+
+import lombok.extern.slf4j.Slf4j;
+
+@Component
+@Profile("data")
+@Order(Ordered.HIGHEST_PRECEDENCE + 2)
+@Slf4j
+public class ApplicationFaker implements CommandLineRunner {
+
+	@Autowired
+	private IApplicationRepository applicationRepository;
+	@Autowired
+	private IEmployeeRepository employeeRepository;
+	@Autowired
+	private IOfferRepository offerRepository;
+	private final Faker faker = Faker.instance();
+	private List<Application> fakeApplications;
+	private List<Employee> employees;
+	private List<Offer> offers;
+
+	@Override
+	public void run(String... args) throws Exception {
+		init();
+		fakeApplications = LongStream.rangeClosed(1, Constant.APPLICATION_NUMBER).mapToObj(this::createFakeApplication)
+				.collect(Collectors.toList());
+		applicationRepository.saveAll(fakeApplications);
+		log.info("Fake applications created successfully");
+	}
+
+	private void init() {
+		employees = employeeRepository.findAll();
+		offers = offerRepository.findAll();
+	}
+
+	private Application createFakeApplication(long i) {
+		String comments = StringUtils.EMPTY;
+		faker.lorem().paragraphs(Constant.COMMENTS_PARAGRAPHS).forEach(p -> StringUtils.appendIfMissing(comments, p));
+		return Application.builder().comments(comments)
+				.employee(employees.get(faker.number().numberBetween(0, employees.size())))
+				.offer(offers.get(faker.number().numberBetween(0, offers.size())))
+				.status(ApplicationStatus.values()[faker.number().numberBetween(0, ApplicationStatus.values().length)])
+				.build();
+	}
+
+}

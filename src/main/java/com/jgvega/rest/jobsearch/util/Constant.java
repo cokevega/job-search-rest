@@ -94,5 +94,11 @@ public class Constant {
 	 */
 	public static final int EMPLOYEE_LANGUAGE_NUMBER = EMPLOYEE_NUMBER * 2;
 	public static final int OFFER_LANGUAGE_NUMBER = OFFER_NUMBER * 2;
+	/**
+	 * Application
+	 */
+	public static final int APPLICATION_NUMBER = OFFER_NUMBER * 3;
+	public static final int COMMENTS_PARAGRAPHS=3;
+	public static final int MAX_LENGTH_APPLICATION_COMMENTS=2048;
 
 }
