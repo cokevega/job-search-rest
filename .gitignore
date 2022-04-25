@@ -33,4 +33,4 @@ build/
 .vscode/
 
 ### Automatic creation models ###
-src/main/java/com/jgvega/rest/jobsearch/model/
+#src/main/java/com/jgvega/rest/jobsearch/model/
