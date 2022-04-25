@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.LongStream;
 
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
@@ -48,6 +47,8 @@ public class ApplicationFaker implements CommandLineRunner {
 				.collect(Collectors.toList());
 		service.saveAll(fakeApplications);
 		log.info("Fake applications created successfully");
+		log.info("Finished fake data creation");
+		System.exit(0);
 	}
 
 	private void init() {
@@ -56,9 +57,7 @@ public class ApplicationFaker implements CommandLineRunner {
 	}
 
 	private Application createFakeApplication(long i) {
-		String comments = StringUtils.EMPTY;
-		faker.lorem().paragraphs(Constant.COMMENTS_PARAGRAPHS).forEach(p -> StringUtils.appendIfMissing(comments, p));
-		return Application.builder().comments(comments)
+		return Application.builder().comments(faker.lorem().paragraph())
 				.employee(employees.get(faker.number().numberBetween(0, employees.size())))
 				.offer(offers.get(faker.number().numberBetween(0, offers.size())))
 				.status(ApplicationStatus.values()[faker.number().numberBetween(0, ApplicationStatus.values().length)])

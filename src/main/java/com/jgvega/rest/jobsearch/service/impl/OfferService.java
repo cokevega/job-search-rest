@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.jgvega.rest.jobsearch.commons.service.CommonService;
+import com.jgvega.rest.jobsearch.commons.service.impl.CommonService;
 import com.jgvega.rest.jobsearch.entity.Offer;
 import com.jgvega.rest.jobsearch.entity.OfferLanguage;
 import com.jgvega.rest.jobsearch.repository.IOfferRepository;

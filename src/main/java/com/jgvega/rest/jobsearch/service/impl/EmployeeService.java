@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.stereotype.Service;
 
-import com.jgvega.rest.jobsearch.commons.service.CommonService;
+import com.jgvega.rest.jobsearch.commons.service.impl.CommonService;
 import com.jgvega.rest.jobsearch.entity.Education;
 import com.jgvega.rest.jobsearch.entity.Employee;
 import com.jgvega.rest.jobsearch.entity.EmployeeLanguage;

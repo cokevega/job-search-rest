@@ -13,4 +13,6 @@ public interface ICommonService<E, I> {
 	
 	public Optional<E> findById(I id);
 	
+	public void deleteById(I id);
+	
 }

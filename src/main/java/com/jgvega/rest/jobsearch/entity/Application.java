@@ -45,8 +45,7 @@ public class Application implements Serializable {
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name = "date", nullable = false)
 	private Date createAt;
-	@Column(columnDefinition = "varchar(" + Constant.MAX_LENGTH_APPLICATION_COMMENTS
-			+ ")", length = Constant.MAX_LENGTH_APPLICATION_COMMENTS)
+	@Column(columnDefinition = "text", length = Constant.MAX_LENGTH_APPLICATION_COMMENTS)
 	private String comments;
 	@NotNull
 	@Enumerated(EnumType.STRING)
