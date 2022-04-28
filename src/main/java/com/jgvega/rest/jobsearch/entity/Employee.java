@@ -62,4 +62,14 @@ public class Employee extends UserDb implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<EmployeeLanguage> languages;
+
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
+
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
 }

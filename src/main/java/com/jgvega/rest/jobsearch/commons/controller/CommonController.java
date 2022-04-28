@@ -24,7 +24,7 @@ public class CommonController<E, I, S extends ICommonService<E, I>> {
 		return ResponseEntity.ok().body(service.findAll());
 	}
 	
-	@GetMapping("/view/{id}")
+	@GetMapping("/show/{id}")
 	public ResponseEntity<E> findById(@PathVariable I id) {
 		Optional<E> op=service.findById(id);
 		if(op.isEmpty())

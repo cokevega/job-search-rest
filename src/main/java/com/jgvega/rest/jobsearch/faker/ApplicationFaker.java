@@ -57,7 +57,7 @@ public class ApplicationFaker implements CommandLineRunner {
 	}
 
 	private Application createFakeApplication(long i) {
-		return Application.builder().comments(faker.lorem().paragraph())
+		return Application.builder().comments(faker.lorem().paragraph(Constant.SENTENCES_APPLICATION_COMMENTS))
 				.employee(employees.get(faker.number().numberBetween(0, employees.size())))
 				.offer(offers.get(faker.number().numberBetween(0, offers.size())))
 				.status(ApplicationStatus.values()[faker.number().numberBetween(0, ApplicationStatus.values().length)])

@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.hibernate.validator.constraints.Length;
 
 import com.jgvega.rest.jobsearch.util.Constant;
+import com.jgvega.rest.jobsearch.entity.Enterprise;
 import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 
 import lombok.Getter;
@@ -56,6 +57,16 @@ public class UserDb extends CommonModel implements Serializable {
 	@PrePersist
 	public void create_at() {
 		this.createAt = new Date();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		return email.equals(((Enterprise) obj).getEmail());
+	}
+
+	@Override
+	public int hashCode() {
+		return email.hashCode();
 	}
 
 }

@@ -34,7 +34,7 @@ public class CommonModel implements Serializable {
 	@Column(length = Constant.MAX_LENGTH_NAME, nullable = false, columnDefinition = "varchar("
 			+ Constant.MAX_LENGTH_NAME + ")")
 	@Length(max = Constant.MAX_LENGTH_NAME)
-	private String name;
+	protected String name;
 
 	@Override
 	public boolean equals(Object obj) {

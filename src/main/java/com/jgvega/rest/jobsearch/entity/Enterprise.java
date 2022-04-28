@@ -34,5 +34,15 @@ public class Enterprise extends UserDb implements Serializable {
 	@Length(max = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION)
 	@Column(length = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION, columnDefinition = "text")
 	private String description;
+	
+	@Override
+	public int hashCode() {
+		return super.hashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		return super.equals(obj);
+	}
 
 }

@@ -66,6 +66,7 @@ public class Constant {
 	 */
 	public static final int ENTERPRISE_NUMBER = 50;
 	public static final int MAX_LENGTH_ENTERPRISE_DESCRIPTION = 2048;
+	public static final int SENTENCES_ENTERPRISE_DESCRIPTION=20;
 	/**
 	 * Employee
 	 */
@@ -98,7 +99,7 @@ public class Constant {
 	 * Application
 	 */
 	public static final int APPLICATION_NUMBER = OFFER_NUMBER * 3;
-	public static final int COMMENTS_PARAGRAPHS=2;
-	public static final int MAX_LENGTH_APPLICATION_COMMENTS=20000;
+	public static final int MAX_LENGTH_APPLICATION_COMMENTS=2048;
+	public static final int SENTENCES_APPLICATION_COMMENTS=20;
 
 }
