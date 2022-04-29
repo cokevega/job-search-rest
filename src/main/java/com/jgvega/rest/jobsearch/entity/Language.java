@@ -27,15 +27,15 @@ public class Language extends CommonModel implements Serializable {
 
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
 	private List<EmployeeLanguage> employees;
-	
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
 	private List<OfferLanguage> offers;
 
 	@Override
 	public boolean equals(Object obj) {
-		return ((Language)obj).getName().equals(this.getName());
+		return ((Language) obj).getName().equals(this.getName());
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return getName().hashCode();

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import com.jgvega.rest.jobsearch.commons.service.ICommonService;
 
 public class CommonService<E, I, R extends JpaRepository<E, I>> implements ICommonService<E, I> {
-	
+
 	@Autowired
 	protected R repository;
 

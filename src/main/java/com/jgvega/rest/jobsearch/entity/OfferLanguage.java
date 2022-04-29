@@ -32,7 +32,7 @@ import lombok.Setter;
 public class OfferLanguage implements Serializable {
 
 	private static final long serialVersionUID = -412611093817476571L;
-	
+
 	@EmbeddedId
 	private OfferLanguageKey id;
 	@NotNull

@@ -2,6 +2,10 @@ package com.jgvega.rest.jobsearch.util;
 
 public class Constant {
 	/**
+	 * Global
+	 */
+	public static final int EXIT_SUCCESS_STATUS = 0;
+	/**
 	 * Work model
 	 */
 	public static final String REMOTE = "Remote";
@@ -66,7 +70,7 @@ public class Constant {
 	 */
 	public static final int ENTERPRISE_NUMBER = 50;
 	public static final int MAX_LENGTH_ENTERPRISE_DESCRIPTION = 2048;
-	public static final int SENTENCES_ENTERPRISE_DESCRIPTION=20;
+	public static final int SENTENCES_ENTERPRISE_DESCRIPTION = 20;
 	/**
 	 * Employee
 	 */
@@ -99,7 +103,7 @@ public class Constant {
 	 * Application
 	 */
 	public static final int APPLICATION_NUMBER = OFFER_NUMBER * 3;
-	public static final int MAX_LENGTH_APPLICATION_COMMENTS=2048;
-	public static final int SENTENCES_APPLICATION_COMMENTS=20;
+	public static final int MAX_LENGTH_APPLICATION_COMMENTS = 2048;
+	public static final int SENTENCES_APPLICATION_COMMENTS = 20;
 
 }

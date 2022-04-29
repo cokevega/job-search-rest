@@ -6,6 +6,6 @@ import org.springframework.stereotype.Repository;
 import com.jgvega.rest.jobsearch.entity.Employee;
 
 @Repository
-public interface IEmployeeRepository extends JpaRepository< Employee, Long> {
+public interface IEmployeeRepository extends JpaRepository<Employee, Long> {
 
 }

@@ -15,32 +15,32 @@ import org.springframework.web.bind.annotation.RequestBody;
 import com.jgvega.rest.jobsearch.commons.service.ICommonService;
 
 public class CommonController<E, I, S extends ICommonService<E, I>> {
-	
+
 	@Autowired
 	protected S service;
-	
+
 	@GetMapping("/all")
 	public ResponseEntity<List<E>> findAll() {
 		return ResponseEntity.ok().body(service.findAll());
 	}
-	
+
 	@GetMapping("/show/{id}")
 	public ResponseEntity<E> findById(@PathVariable I id) {
-		Optional<E> op=service.findById(id);
-		if(op.isEmpty())
+		Optional<E> op = service.findById(id);
+		if (op.isEmpty())
 			return ResponseEntity.notFound().build();
 		else
 			return ResponseEntity.ok().body(op.get());
 	}
-	
+
 	@PostMapping("/create")
 	public ResponseEntity<E> create(@RequestBody E entity) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(entity));
 	}
-	
+
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable I id) {
 		return ResponseEntity.status(HttpStatus.FOUND).build();
 	}
-	
+
 }

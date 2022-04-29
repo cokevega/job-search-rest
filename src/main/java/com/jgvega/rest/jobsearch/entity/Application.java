@@ -37,7 +37,7 @@ import lombok.Setter;
 public class Application implements Serializable {
 
 	private static final long serialVersionUID = -3495615916265847083L;
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
@@ -60,7 +60,13 @@ public class Application implements Serializable {
 
 	@Override
 	public boolean equals(Object obj) {
-		return this.id == ((Application) obj).getId();
+		return employee.getId() == ((Application) obj).getEmployee().getId()
+				&& offer.getId() == ((Application) obj).getOffer().getId();
+	}
+
+	@Override
+	public int hashCode() {
+		return (int) (employee.getId() + offer.getId());
 	}
 
 	@PrePersist

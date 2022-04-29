@@ -13,14 +13,15 @@ import com.jgvega.rest.jobsearch.service.IOfferService;
 @Service
 public class OfferService extends CommonService<Offer, Long, IOfferRepository> implements IOfferService {
 
+	@Override
 	public Offer addLanguage(Offer offer, OfferLanguage offerLanguage) {
-		if(offer.getLanguages()==null)
+		if (offer.getLanguages() == null)
 			offer.setLanguages(new ArrayList<OfferLanguage>());
-		if(!offer.getLanguages().contains(offerLanguage)) {
+		if (!offer.getLanguages().contains(offerLanguage)) {
 			offer.getLanguages().add(offerLanguage);
 			return repository.save(offer);
 		}
 		return offer;
 	}
-	
+
 }

@@ -22,7 +22,7 @@ import com.sun.codemodel.JCodeModel;
 @Component
 @Profile("languages")
 public class LanguageModelCreator implements CommandLineRunner {
-	
+
 	@Value("${languages.creation.endpoint.languages}")
 	private String endpoint;
 	@Value("${languages.creation.files.path-to-package}")
@@ -31,7 +31,7 @@ public class LanguageModelCreator implements CommandLineRunner {
 	private String packageName;
 	@Value("${languages.creation.files.java-class}")
 	private String javaClassName;
-	
+
 	@Override
 	public void run(String... args) throws Exception {
 		getLanguages();
@@ -64,5 +64,5 @@ public class LanguageModelCreator implements CommandLineRunner {
 		mapper.generate(codeModel, javaClass, packageName, jsonUrl);
 		codeModel.build(outputJavaClass);
 	}
-	
+
 }

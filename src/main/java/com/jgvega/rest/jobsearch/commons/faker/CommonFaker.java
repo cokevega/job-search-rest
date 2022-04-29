@@ -6,18 +6,19 @@ import org.springframework.boot.CommandLineRunner;
 
 import com.github.javafaker.Faker;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public abstract class CommonFaker<E> implements CommandLineRunner {
 
 	/**
-	 * Faker instance to create fake data
-	 * Spanish // UK English // American English
+	 * Faker instance to create fake data Spanish // UK English // American English
 	 */
 //	protected final Faker faker = Faker.instance(
 //			Locale.lookup(LanguageRange.parse("es-Es,en-UK,en-US"), Arrays.asList(Locale.getAvailableLocales())));
 
 	/**
-	 * Faker instance to create fake data
-	 * English
+	 * Faker instance to create fake data English
 	 */
 	protected final Faker faker = Faker.instance();
 
@@ -47,6 +48,16 @@ public abstract class CommonFaker<E> implements CommandLineRunner {
 	 */
 	protected boolean validateCreatedEntity(E entity) {
 		return !fakeEntities.contains(entity);
+	}
+
+	/**
+	 * Finish the application by calling the <b><i>System.exit</i></b> method.
+	 * 
+	 * @param exit exit status
+	 */
+	protected void finishFakers(int exit) {
+		log.info("Finished fake data creation");
+		System.exit(exit);
 	}
 
 }

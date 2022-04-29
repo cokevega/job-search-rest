@@ -8,12 +8,14 @@ public enum ApplicationStatus {
 		public String toString() {
 			return Constant.UNKNOWN;
 		}
-	}, ACCEPTED {
+	},
+	ACCEPTED {
 		@Override
 		public String toString() {
 			return Constant.ACCEPTED;
 		}
-	}, REJECTED {
+	},
+	REJECTED {
 		@Override
 		public String toString() {
 			return Constant.REJECTED;

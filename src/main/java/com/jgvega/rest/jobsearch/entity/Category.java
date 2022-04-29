@@ -32,12 +32,12 @@ public class Category extends CommonModel implements Serializable {
 	@Column(length = Constant.MAX_CHARACTERS_CATEGORY_DESCRIPTION, nullable = false, columnDefinition = "varchar("
 			+ Constant.MAX_CHARACTERS_CATEGORY_DESCRIPTION + ")")
 	private String description;
-	
+
 	@Override
 	public boolean equals(Object obj) {
-		return name.equals(((Category)obj).getName());
+		return name.equals(((Category) obj).getName());
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return name.hashCode();

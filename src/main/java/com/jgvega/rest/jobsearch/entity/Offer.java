@@ -58,7 +58,8 @@ public class Offer extends CommonModel implements Serializable {
 	@Enumerated(EnumType.STRING)
 	private WorkModel model;
 	@Length(max = Constant.MAX_LENGTH_OFFER_LOCATION)
-	@Column(length = Constant.MAX_LENGTH_OFFER_LOCATION, columnDefinition = "varchar("+Constant.MAX_LENGTH_OFFER_LOCATION+")")
+	@Column(length = Constant.MAX_LENGTH_OFFER_LOCATION, columnDefinition = "varchar("
+			+ Constant.MAX_LENGTH_OFFER_LOCATION + ")")
 	private String location;
 	@NotNull
 	@Temporal(TemporalType.TIMESTAMP)

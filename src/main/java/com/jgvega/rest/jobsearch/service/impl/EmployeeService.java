@@ -16,6 +16,7 @@ import com.jgvega.rest.jobsearch.service.IEmployeeService;
 @Service
 public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepository> implements IEmployeeService {
 
+	@Override
 	public Employee addEducation(Employee employee, Education education) {
 		if (employee.getEducation() == null)
 			employee.setEducation(new ArrayList<Education>());
@@ -26,6 +27,7 @@ public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepo
 		return employee;
 	}
 
+	@Override
 	public Employee addExperience(Employee employee, Experience experience) {
 		if (employee.getExperiences() == null)
 			employee.setExperiences(new ArrayList<Experience>());
@@ -36,6 +38,7 @@ public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepo
 		return employee;
 	}
 
+	@Override
 	public Employee addSkill(Employee employee, Skill skill) {
 		if (employee.getSkills() == null)
 			employee.setSkills(new ArrayList<Skill>());
@@ -46,6 +49,7 @@ public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepo
 		return employee;
 	}
 
+	@Override
 	public Employee addLanguage(Employee employee, EmployeeLanguage employeeLanguage) {
 		if (employee.getLanguages() == null)
 			employee.setLanguages(new ArrayList<EmployeeLanguage>());

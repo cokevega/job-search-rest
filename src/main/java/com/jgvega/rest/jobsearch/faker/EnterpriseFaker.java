@@ -44,7 +44,9 @@ public class EnterpriseFaker extends CommonFaker<Enterprise> {
 	protected void createFakeEntity(long i) {
 		Enterprise enterprise;
 		do {
-			enterprise = Enterprise.builder().description(faker.lorem().paragraph(Constant.SENTENCES_ENTERPRISE_DESCRIPTION)).email(faker.internet().emailAddress()).id(i).name(faker.company().name())
+			enterprise = Enterprise.builder()
+					.description(faker.lorem().paragraph(Constant.SENTENCES_ENTERPRISE_DESCRIPTION))
+					.email(faker.internet().emailAddress()).id(i).name(faker.company().name())
 					.password(faker.internet().password())
 					.status(UserStatus.values()[faker.number().numberBetween(0, UserStatus.values().length)]).build();
 		} while (!validateCreatedEntity(enterprise));

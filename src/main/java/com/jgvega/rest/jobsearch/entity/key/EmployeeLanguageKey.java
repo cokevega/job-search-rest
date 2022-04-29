@@ -25,16 +25,16 @@ public class EmployeeLanguageKey implements Serializable {
 	private Long employeeId;
 	@Column(name = "language_id")
 	private Long languageId;
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		return ((EmployeeLanguageKey) obj).getEmployeeId() == employeeId
 				&& ((EmployeeLanguageKey) obj).getLanguageId() == languageId;
 	}
-	
+
 	@Override
 	public int hashCode() {
-		return (int)(languageId+employeeId);
+		return (int) (languageId + employeeId);
 	}
 
 }
