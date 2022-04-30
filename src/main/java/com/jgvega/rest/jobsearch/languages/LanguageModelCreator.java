@@ -19,6 +19,11 @@ import org.springframework.stereotype.Component;
 
 import com.sun.codemodel.JCodeModel;
 
+/**
+ * Model creator for the languages rescued from another API.
+ * @author cokev
+ *
+ */
 @Component
 @Profile("languages")
 public class LanguageModelCreator implements CommandLineRunner {

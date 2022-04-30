@@ -105,5 +105,9 @@ public class Constant {
 	public static final int APPLICATION_NUMBER = OFFER_NUMBER * 3;
 	public static final int MAX_LENGTH_APPLICATION_COMMENTS = 2048;
 	public static final int SENTENCES_APPLICATION_COMMENTS = 20;
+	/*
+	 * Bad request
+	 */
+	public static final String MESSAGE_BAD_REQUEST="Malformed request";
 
 }
