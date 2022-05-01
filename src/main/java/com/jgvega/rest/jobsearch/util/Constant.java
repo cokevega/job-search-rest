@@ -108,6 +108,23 @@ public class Constant {
 	/*
 	 * Bad request
 	 */
-	public static final String MESSAGE_BAD_REQUEST="Malformed request";
-
+	public static final String MESSAGE_BAD_REQUEST = "Malformed request";
+	/**
+	 * Constraint violation exception
+	 */
+	public static final String TYPE_CONTRAINT_VIOLATION_EXCEPTION = "ConstraintViolationException type";
+	public static final String INSTANCE_CONTRAINT_VIOLATION_EXCEPTION = "ConstraintViolationException instance";
+	/**
+	 * Entity not found exception
+	 */
+	public static final String TYPE_ENTITY_NOT_FOUND_EXCEPTION = "EntityNotFoundException type";
+	public static final String INSTANCE_ENTITY_NOT_FOUND_EXCEPTION = "EntityNotFoundException instance";
+	public static final String TITLE_ENTITY_NOT_FOUND_EXCEPTION = "Entity could not be found";
+	public static final String DETAIL_ENTITY_NOT_FOUND_EXCEPTION = "Not found the entity with the specified parameters";
+	/**
+	 * Method argument type mismatch exception
+	 */
+	public static final String TYPE_METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION="MethodArgumentTypeMismatchException type";
+	public static final String INSTANCE_METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION="MethodArgumentTypeMismatchException instance";
+	
 }

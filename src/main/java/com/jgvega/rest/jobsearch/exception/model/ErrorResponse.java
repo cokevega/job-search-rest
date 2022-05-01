@@ -37,23 +37,23 @@ public class ErrorResponse implements Serializable {
 	/**
 	 * Explanation of the error
 	 */
-	protected String details;
+	protected String detail;
 	/**
 	 * URI that identifies the specific occurrence of the error
 	 */
 	protected String instance;
-	
+
 	/**
 	 * 
-	 * @param type URI identifier that categorizes the error
-	 * @param title Short message about the error
-	 * @param status HTTP response code
-	 * @param details Explanation of the error
+	 * @param type     URI identifier that categorizes the error
+	 * @param title    Short message about the error
+	 * @param status   HTTP response code
+	 * @param details  Explanation of the error
 	 * @param instance
 	 * @return URI that identifies the specific occurrence of the error
 	 */
-	public static ErrorResponse of(String type, String title, int status, String details, String instance) {
-		return new ErrorResponse(type, title, status, details, instance);
+	public static ErrorResponse of(String type, String title, int status, String detail, String instance) {
+		return new ErrorResponse(type, title, status, detail, instance);
 	}
 
 }

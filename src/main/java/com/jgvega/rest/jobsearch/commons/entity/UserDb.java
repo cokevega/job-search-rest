@@ -1,4 +1,4 @@
-package com.jgvega.rest.jobsearch.commons.model;
+package com.jgvega.rest.jobsearch.commons.entity;
 
 import java.io.Serializable;
 import java.util.Date;

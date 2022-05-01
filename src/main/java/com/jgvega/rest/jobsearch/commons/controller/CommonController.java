@@ -1,7 +1,6 @@
 package com.jgvega.rest.jobsearch.commons.controller;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -14,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jgvega.rest.jobsearch.commons.service.ICommonService;
 
-public class CommonController<E, I, S extends ICommonService<E, I>> {
+public abstract class CommonController<E, I, S extends ICommonService<E, I>> {
 
 	@Autowired
 	protected S service;
@@ -26,11 +25,7 @@ public class CommonController<E, I, S extends ICommonService<E, I>> {
 
 	@GetMapping("/show/{id}")
 	public ResponseEntity<E> findById(@PathVariable I id) {
-		Optional<E> op = service.findById(id);
-		if (op.isEmpty())
-			return ResponseEntity.notFound().build();
-		else
-			return ResponseEntity.ok().body(op.get());
+		return ResponseEntity.ok(service.findById(id));
 	}
 
 	@PostMapping("/create")

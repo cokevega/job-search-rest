@@ -5,7 +5,7 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Table;
 
-import com.jgvega.rest.jobsearch.commons.model.Attribute;
+import com.jgvega.rest.jobsearch.commons.entity.Attribute;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

@@ -5,4 +5,6 @@ import com.jgvega.rest.jobsearch.entity.Category;
 
 public interface ICategoryService extends ICommonService<Category, Long> {
 
+	public Category edit(Category oldCategory, Category newCategory);
+
 }

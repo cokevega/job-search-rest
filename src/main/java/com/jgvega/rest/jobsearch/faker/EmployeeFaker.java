@@ -5,6 +5,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.LongStream;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
@@ -118,13 +120,19 @@ public class EmployeeFaker extends CommonFaker<Employee> {
 		int index, indexLanguage;
 		EmployeeLanguageKey employeeLanguageKey;
 		List<Language> languages = languageService.findAll();
+		boolean continueLoop = true;
 		do {
 			index = faker.number().numberBetween(0, fakeEntities.size());
 			indexLanguage = faker.number().numberBetween(1, languages.size());
 			employeeLanguageKey = EmployeeLanguageKey.builder()
 					.employeeId(((List<Employee>) fakeEntities).get(index).getId())
 					.languageId(languages.get(indexLanguage).getId()).build();
-		} while (employeeLanguageService.findById(employeeLanguageKey).isPresent());
+			try {
+				employeeLanguageService.findById(employeeLanguageKey);
+			} catch (EntityNotFoundException e) {
+				continueLoop = false;
+			}
+		} while (continueLoop);
 		Employee employee = ((List<Employee>) fakeEntities).get(index);
 		Language language = languages.get(indexLanguage);
 		EmployeeLanguage employeeLanguage = EmployeeLanguage.builder().id(employeeLanguageKey).employee(employee)

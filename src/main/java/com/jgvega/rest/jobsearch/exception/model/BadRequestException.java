@@ -2,9 +2,9 @@ package com.jgvega.rest.jobsearch.exception.model;
 
 import org.springframework.http.HttpStatus;
 
+import com.jgvega.rest.jobsearch.commons.exception.CommonException;
 import com.jgvega.rest.jobsearch.util.Constant;
 
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,26 +18,17 @@ import lombok.Setter;
  */
 @Getter
 @Setter
-@AllArgsConstructor
-public class BadRequestException extends RuntimeException {
+public class BadRequestException extends CommonException {
 
 	private static final long serialVersionUID = 4171965379972219563L;
-	
-	private String type;
-	private String details;
-	private String instance;
-	
-	/**
-	 * Instantiation of an <code>ErrorResponse</code> containing the common fields
-	 * (<code>status</code> and <code>title</code>) for any malformed request.
-	 * 
-	 * @param type     <code>ErrorResponse.type</code>
-	 * @param details  type <code>ErrorResponse.details</code>
-	 * @param instance type <code>ErrorResponse.instance</code>
-	 * @return <code>ErrorResponse</code> generated instance
-	 */
-	public static ErrorResponse of(String type, String details, String instance) {
-		return ErrorResponse.of(type, Constant.MESSAGE_BAD_REQUEST, HttpStatus.BAD_REQUEST.value(), details, instance);
+
+	public ErrorResponse response(String type, String detail, String instance) {
+		this.type = type;
+		this.detail = detail;
+		this.instance = instance;
+		this.status = HttpStatus.BAD_REQUEST.value();
+		this.title = Constant.MESSAGE_BAD_REQUEST;
+		return super.response(type, title, status, detail, instance);
 	}
 
 }

@@ -8,7 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-import com.jgvega.rest.jobsearch.commons.model.CommonModel;
+import com.jgvega.rest.jobsearch.commons.entity.CommonModel;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

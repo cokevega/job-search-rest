@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.commons.model.CommonModel;
+import com.jgvega.rest.jobsearch.commons.entity.CommonModel;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;

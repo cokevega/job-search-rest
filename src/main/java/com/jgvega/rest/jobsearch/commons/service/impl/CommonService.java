@@ -3,11 +3,12 @@ package com.jgvega.rest.jobsearch.commons.service.impl;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jgvega.rest.jobsearch.commons.service.ICommonService;
-
 public class CommonService<E, I, R extends JpaRepository<E, I>> implements ICommonService<E, I> {
 
 	@Autowired
@@ -29,8 +30,12 @@ public class CommonService<E, I, R extends JpaRepository<E, I>> implements IComm
 	}
 
 	@Override
-	public Optional<E> findById(I id) {
-		return repository.findById(id);
+	public E findById(I id) {
+		Optional<E> op=repository.findById(id);
+		if(op.isPresent())
+			return op.get();
+		else
+			throw new EntityNotFoundException();
 	}
 
 	@Override

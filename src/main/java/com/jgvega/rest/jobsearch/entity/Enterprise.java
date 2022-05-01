@@ -11,7 +11,7 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
 
-import com.jgvega.rest.jobsearch.commons.model.UserDb;
+import com.jgvega.rest.jobsearch.commons.entity.UserDb;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;

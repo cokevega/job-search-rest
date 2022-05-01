@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.LongStream;
 
+import javax.persistence.EntityNotFoundException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Profile;
 import org.springframework.core.Ordered;
@@ -74,12 +76,18 @@ public class OfferFaker extends CommonFaker<Offer> {
 	private void createFakeLanguage(long i) {
 		int index, indexLanguage;
 		OfferLanguageKey offerLanguageKey;
+		boolean continueLoop = true;
 		do {
 			index = faker.number().numberBetween(0, fakeEntities.size());
 			indexLanguage = faker.number().numberBetween(0, languages.size());
 			offerLanguageKey = OfferLanguageKey.builder().languageId(languages.get(indexLanguage).getId())
 					.offerId(((List<Offer>) fakeEntities).get(index).getId()).build();
-		} while (offerLanguageService.findById(offerLanguageKey).isPresent());
+			try {
+				offerLanguageService.findById(offerLanguageKey);
+			} catch (EntityNotFoundException e) {
+				continueLoop = false;
+			}
+		} while (continueLoop);
 		Offer offer = ((List<Offer>) fakeEntities).get(index);
 		Language language = languages.get(indexLanguage);
 		OfferLanguage offerLanguage = OfferLanguage.builder().id(offerLanguageKey).language(language)
