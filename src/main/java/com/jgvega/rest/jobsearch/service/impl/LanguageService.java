@@ -10,10 +10,4 @@ import com.jgvega.rest.jobsearch.service.ILanguageService;
 @Service
 public class LanguageService extends CommonService<Language, Long, ILanguageRepository> implements ILanguageService {
 
-	@Override
-	public Language edit(Language oldEntity, Language newEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

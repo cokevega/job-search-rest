@@ -2,6 +2,8 @@ package com.jgvega.rest.jobsearch.commons.service;
 
 import java.util.List;
 
+import com.jgvega.rest.jobsearch.commons.model.FilterGeneric;
+
 public interface ICommonService<E, I> {
 
 	public List<E> findAll();
@@ -12,8 +14,10 @@ public interface ICommonService<E, I> {
 
 	public E findById(I id);
 	
-	public E edit(E oldEntity, E newEntity);
+	public E edit(I id, E newEntity);
 
 	public void deleteById(I id);
+	
+	public List<E> filter(FilterGeneric entity);
 
 }

@@ -60,10 +60,4 @@ public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepo
 		return employee;
 	}
 
-	@Override
-	public Employee edit(Employee oldEntity, Employee newEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

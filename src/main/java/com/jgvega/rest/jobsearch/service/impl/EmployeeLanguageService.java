@@ -13,10 +13,4 @@ public class EmployeeLanguageService
 		extends CommonService<EmployeeLanguage, EmployeeLanguageKey, IEmployeeLanguageRepository>
 		implements IEmployeeLanguageService {
 
-	@Override
-	public EmployeeLanguage edit(EmployeeLanguage oldEntity, EmployeeLanguage newEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
 }

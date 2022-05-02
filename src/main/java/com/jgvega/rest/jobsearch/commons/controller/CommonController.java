@@ -36,8 +36,7 @@ public class CommonController<E, I, S extends ICommonService<E, I>> {
 	
 	@PutMapping("/edit/{id}")
 	public ResponseEntity<E> edit(@PathVariable I id, @RequestBody E newEntity) {
-		E oldEntity=service.findById(id);
-		return ResponseEntity.status(HttpStatus.CREATED).body(service.edit(oldEntity, newEntity));
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.edit(id, newEntity));
 	}
 
 	@DeleteMapping("/delete/{id}")
