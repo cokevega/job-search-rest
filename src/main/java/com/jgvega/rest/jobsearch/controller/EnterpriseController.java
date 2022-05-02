@@ -13,6 +13,4 @@ import com.jgvega.rest.jobsearch.service.IEnterpriseService;
 @RequestMapping("/enterprise")
 public class EnterpriseController extends CommonController<Enterprise, Long, IEnterpriseService> {
 
-	
-	
 }

@@ -26,5 +26,12 @@ public class EnterpriseService extends CommonService<Enterprise, Long, IEnterpri
 		enterprise.setPassword(null);
 		return enterprise;
 	}
+	
+	@Override
+	public Enterprise save(Enterprise entity) {
+		Enterprise enterprise=super.save(entity);
+		enterprise.setPassword(null);
+		return enterprise;
+	}
 
 }
