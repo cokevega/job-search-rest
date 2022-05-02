@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.jgvega.rest.jobsearch.commons.service.ICommonService;
-public class CommonService<E, I, R extends JpaRepository<E, I>> implements ICommonService<E, I> {
+public abstract class CommonService<E, I, R extends JpaRepository<E, I>> implements ICommonService<E, I> {
 
 	@Autowired
 	protected R repository;
@@ -38,6 +38,9 @@ public class CommonService<E, I, R extends JpaRepository<E, I>> implements IComm
 			throw new EntityNotFoundException();
 	}
 
+	@Override
+	public abstract E edit(E oldEntity, E newEntity);
+	
 	@Override
 	public void deleteById(I id) {
 		repository.deleteById(id);

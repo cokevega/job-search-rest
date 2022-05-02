@@ -11,10 +11,10 @@ import com.jgvega.rest.jobsearch.service.ICategoryService;
 public class CategoryService extends CommonService<Category, Long, ICategoryRepository> implements ICategoryService {
 
 	@Override
-	public Category edit(Category oldCategory, Category newCategory) {
-		oldCategory.setName(newCategory.getName());
-		oldCategory.setDescription(newCategory.getDescription());
-		return save(oldCategory);
+	public Category edit(Category oldEntity, Category newEntity) {
+		oldEntity.setName(newEntity.getName());
+		oldEntity.setDescription(newEntity.getDescription());
+		return save(oldEntity);
 	}
 
 }

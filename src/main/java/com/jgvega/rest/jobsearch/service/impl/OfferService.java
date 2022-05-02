@@ -24,4 +24,10 @@ public class OfferService extends CommonService<Offer, Long, IOfferRepository> i
 		return offer;
 	}
 
+	@Override
+	public Offer edit(Offer oldEntity, Offer newEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

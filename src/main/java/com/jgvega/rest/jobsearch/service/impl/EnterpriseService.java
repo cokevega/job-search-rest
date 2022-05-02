@@ -11,4 +11,10 @@ import com.jgvega.rest.jobsearch.service.IEnterpriseService;
 public class EnterpriseService extends CommonService<Enterprise, Long, IEnterpriseRepository>
 		implements IEnterpriseService {
 
+	@Override
+	public Enterprise edit(Enterprise oldEntity, Enterprise newEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

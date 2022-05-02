@@ -12,4 +12,10 @@ import com.jgvega.rest.jobsearch.service.IOfferLanguageService;
 public class OfferLanguageService extends CommonService<OfferLanguage, OfferLanguageKey, IOfferLanguageRepository>
 		implements IOfferLanguageService {
 
+	@Override
+	public OfferLanguage edit(OfferLanguage oldEntity, OfferLanguage newEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

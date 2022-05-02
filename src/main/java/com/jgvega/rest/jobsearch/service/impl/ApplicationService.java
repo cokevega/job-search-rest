@@ -11,4 +11,10 @@ import com.jgvega.rest.jobsearch.service.IApplicationService;
 public class ApplicationService extends CommonService<Application, Long, IApplicationRepository>
 		implements IApplicationService {
 
+	@Override
+	public Application edit(Application oldEntity, Application newEntity) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

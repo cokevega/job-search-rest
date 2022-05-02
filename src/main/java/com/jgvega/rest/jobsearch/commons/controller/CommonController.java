@@ -9,11 +9,12 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.jgvega.rest.jobsearch.commons.service.ICommonService;
 
-public abstract class CommonController<E, I, S extends ICommonService<E, I>> {
+public class CommonController<E, I, S extends ICommonService<E, I>> {
 
 	@Autowired
 	protected S service;
@@ -31,6 +32,12 @@ public abstract class CommonController<E, I, S extends ICommonService<E, I>> {
 	@PostMapping("/create")
 	public ResponseEntity<E> create(@RequestBody E entity) {
 		return ResponseEntity.status(HttpStatus.CREATED).body(service.save(entity));
+	}
+	
+	@PutMapping("/edit/{id}")
+	public ResponseEntity<E> edit(@PathVariable I id, @RequestBody E newEntity) {
+		E oldEntity=service.findById(id);
+		return ResponseEntity.status(HttpStatus.CREATED).body(service.edit(oldEntity, newEntity));
 	}
 
 	@DeleteMapping("/delete/{id}")
