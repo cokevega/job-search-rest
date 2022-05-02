@@ -11,7 +11,9 @@ import javax.persistence.Table;
 
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jgvega.rest.jobsearch.commons.entity.UserDb;
+import com.jgvega.rest.jobsearch.serializer.OfferSerializer;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;
@@ -29,11 +31,12 @@ public class Enterprise extends UserDb implements Serializable {
 
 	private static final long serialVersionUID = -333134196983909116L;
 
-	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "enterprise")
-	private List<Offer> offers;
 	@Length(max = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION)
 	@Column(length = Constant.MAX_LENGTH_ENTERPRISE_DESCRIPTION, columnDefinition = "text")
 	private String description;
+	@OneToMany(cascade = CascadeType.ALL, orphanRemoval = true, mappedBy = "enterprise")
+	@JsonSerialize(using = OfferSerializer.class)
+	private List<Offer> offers;
 
 	@Override
 	public int hashCode() {
