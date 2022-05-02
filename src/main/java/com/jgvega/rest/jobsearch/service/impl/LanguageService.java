@@ -8,6 +8,7 @@ import com.jgvega.rest.jobsearch.repository.ILanguageRepository;
 import com.jgvega.rest.jobsearch.service.ILanguageService;
 
 @Service
-public class LanguageService extends CommonService<Language, Long, ILanguageRepository> implements ILanguageService {
+public class LanguageService extends CommonService<Language, Long, ILanguageRepository>
+		implements ILanguageService {
 
 }

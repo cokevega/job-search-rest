@@ -9,8 +9,8 @@ import com.jgvega.rest.jobsearch.repository.IEmployeeLanguageRepository;
 import com.jgvega.rest.jobsearch.service.IEmployeeLanguageService;
 
 @Service
-public class EmployeeLanguageService
-		extends CommonService<EmployeeLanguage, EmployeeLanguageKey, IEmployeeLanguageRepository>
+public class EmployeeLanguageService extends
+		CommonService<EmployeeLanguage, EmployeeLanguageKey, IEmployeeLanguageRepository>
 		implements IEmployeeLanguageService {
 
 }

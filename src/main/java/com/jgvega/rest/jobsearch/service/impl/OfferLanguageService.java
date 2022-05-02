@@ -9,7 +9,8 @@ import com.jgvega.rest.jobsearch.repository.IOfferLanguageRepository;
 import com.jgvega.rest.jobsearch.service.IOfferLanguageService;
 
 @Service
-public class OfferLanguageService extends CommonService<OfferLanguage, OfferLanguageKey, IOfferLanguageRepository>
+public class OfferLanguageService
+		extends CommonService<OfferLanguage, OfferLanguageKey, IOfferLanguageRepository>
 		implements IOfferLanguageService {
 
 }

@@ -14,7 +14,8 @@ import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
 import com.jgvega.rest.jobsearch.service.IEmployeeService;
 
 @Service
-public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepository> implements IEmployeeService {
+public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepository>
+		implements IEmployeeService {
 
 	@Override
 	public Employee addEducation(Employee employee, Education education) {

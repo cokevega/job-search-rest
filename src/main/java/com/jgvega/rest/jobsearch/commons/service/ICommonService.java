@@ -2,7 +2,7 @@ package com.jgvega.rest.jobsearch.commons.service;
 
 import java.util.List;
 
-import com.jgvega.rest.jobsearch.commons.model.FilterGeneric;
+import org.springframework.data.domain.Example;
 
 public interface ICommonService<E, I> {
 
@@ -18,6 +18,8 @@ public interface ICommonService<E, I> {
 
 	public void deleteById(I id);
 	
-	public List<E> filter(FilterGeneric entity);
+	public List<E> filter(E entity);
+	
+	public List<E> findByExample(Example<E> example);
 
 }
