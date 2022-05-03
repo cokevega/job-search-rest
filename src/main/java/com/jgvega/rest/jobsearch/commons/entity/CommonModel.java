@@ -29,7 +29,7 @@ public class CommonModel implements Serializable {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	protected Long id;
 	@NotBlank
 	@Column(length = Constant.MAX_LENGTH_NAME, nullable = false, columnDefinition = "varchar("
 			+ Constant.MAX_LENGTH_NAME + ")")

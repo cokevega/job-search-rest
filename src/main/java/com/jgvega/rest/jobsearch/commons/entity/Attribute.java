@@ -27,6 +27,6 @@ public class Attribute extends CommonModel implements Serializable {
 	@NotNull
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
-	private Level level;
+	protected Level level;
 
 }

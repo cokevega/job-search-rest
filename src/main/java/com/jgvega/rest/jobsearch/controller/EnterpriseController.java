@@ -11,6 +11,8 @@ import com.jgvega.rest.jobsearch.service.IEnterpriseService;
 @RestController
 @Profile("rest")
 @RequestMapping("/enterprise")
-public class EnterpriseController extends CommonController<Enterprise, Long, IEnterpriseService> {
+public class EnterpriseController extends UserDbController<Enterprise, Long, IEnterpriseService> {
 
+	//TODO: refactor, UserDb controller as father
+	
 }

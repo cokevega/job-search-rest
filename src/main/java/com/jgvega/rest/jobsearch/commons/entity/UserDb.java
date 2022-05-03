@@ -38,20 +38,20 @@ public class UserDb extends CommonModel implements Serializable {
 	@Email
 	@Column(nullable = false, length = Constant.MAX_LENGTH_EMAIL, columnDefinition = "varchar("
 			+ Constant.MAX_LENGTH_EMAIL + ")", unique = true)
-	private String email;
+	protected String email;
 	@NotBlank
 	@Length(min = Constant.MIN_LENGTH_PASSWORD, max = Constant.MAX_LENGTH_PASSWORD)
 	@Column(nullable = false, length = Constant.MAX_LENGTH_PASSWORD, columnDefinition = "varchar("
 			+ Constant.MAX_LENGTH_PASSWORD + ")")
-	private String password;
+	protected String password;
 	@Temporal(TemporalType.TIMESTAMP)
 	@NotNull
 	@Column(name = "create_at", nullable = false)
-	private Date createAt;
+	protected Date createAt;
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	@NotNull
-	private UserStatus status;
+	protected UserStatus status;
 
 	@PrePersist
 	public void create_at() {
