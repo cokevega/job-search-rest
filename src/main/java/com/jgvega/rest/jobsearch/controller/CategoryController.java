@@ -22,11 +22,7 @@ public class CategoryController extends CommonController<Category, Long, ICatego
 	@GetMapping("/filter")
 	public ResponseEntity<List<Category>> filterCategory(@RequestParam(required = false) String name,
 			@RequestParam(required = false) String description) {
-		Category category=Category.builder().build();
-		if(name!=null && !name.isBlank())
-			category.setName(name);
-		if(description!=null && !description.isBlank())
-			category.setDescription(description);
+		Category category = Category.builder().description(description).name(name).build();
 		return ResponseEntity.status(HttpStatus.FOUND).body(service.filter(category));
 	}
 
