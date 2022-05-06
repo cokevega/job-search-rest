@@ -58,5 +58,14 @@ public class UserDbService<E extends UserDb, I, R extends IUserDbRepository<E, I
 		return Enterprise.builder().createAt(userDb.getCreateAt()).email(userDb.getEmail()).name(userDb.getName())
 				.status(userDb.getStatus()).build();
 	}
+	
+	@Override
+	public E edit(I id, E newEntity) {
+		return findByIdForEdition(id);
+	}
+
+	private E findByIdForEdition(I id) {
+		return super.findById(id);
+	}
 
 }

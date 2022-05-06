@@ -18,8 +18,12 @@ public class EnterpriseService extends UserDbService<Enterprise, Long, IEnterpri
 
 	@Override
 	public Enterprise edit(Long id, Enterprise newEntity) {
-		// TODO Auto-generated method stub
-		return super.edit(id, newEntity);
+		Enterprise oldEntity =super.edit(id, newEntity);
+		oldEntity.setDescription(newEntity.getDescription());
+		oldEntity.setEmail(newEntity.getEmail());
+		oldEntity.setName(newEntity.getName());
+		oldEntity.setStatus(newEntity.getStatus());
+		return save(oldEntity);
 	}
 
 	@Override
