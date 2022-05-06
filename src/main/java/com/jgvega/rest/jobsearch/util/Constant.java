@@ -112,8 +112,8 @@ public class Constant {
 	/**
 	 * Constraint violation exception
 	 */
-	public static final String TYPE_CONTRAINT_VIOLATION_EXCEPTION = "ConstraintViolationException type";
-	public static final String INSTANCE_CONTRAINT_VIOLATION_EXCEPTION = "ConstraintViolationException instance";
+	public static final String TYPE_CONSTRAINT_VIOLATION_EXCEPTION = "ConstraintViolationException type";
+	public static final String INSTANCE_CONSTRAINT_VIOLATION_EXCEPTION = "ConstraintViolationException instance";
 	/**
 	 * Entity not found exception
 	 */
@@ -126,5 +126,10 @@ public class Constant {
 	 */
 	public static final String TYPE_METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION="MethodArgumentTypeMismatchException type";
 	public static final String INSTANCE_METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION="MethodArgumentTypeMismatchException instance";
+	/**
+	 * SQL integrity constraint violation exception
+	 */
+	public static final String TYPE_SQL_INTEGRITY_CONSTRAINT_VIOLATION_EXCEPTION = "SQLIntegrityConstraintViolationException type";
+	public static final String INSTANCE_SQL_INTEGRITY_CONSTRAINT_VIOLATION_EXCEPTION = "SQLIntegrityConstraintViolationException instance";
 	
 }

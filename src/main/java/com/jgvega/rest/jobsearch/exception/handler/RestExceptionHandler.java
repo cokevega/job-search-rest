@@ -1,5 +1,7 @@
 package com.jgvega.rest.jobsearch.exception.handler;
 
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import javax.persistence.EntityNotFoundException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
@@ -39,8 +41,9 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 			details += (violation.getPropertyPath() + ": " + violation.getMessage() + "; ");
 		}
 		details = details.substring(0, details.length() - 2);
-		return ResponseEntity.badRequest().body((new BadRequestException()).response(
-				Constant.TYPE_CONTRAINT_VIOLATION_EXCEPTION, details, Constant.INSTANCE_CONTRAINT_VIOLATION_EXCEPTION));
+		return ResponseEntity.badRequest()
+				.body((new BadRequestException()).response(Constant.TYPE_CONSTRAINT_VIOLATION_EXCEPTION, details,
+						Constant.INSTANCE_CONSTRAINT_VIOLATION_EXCEPTION));
 	}
 
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
@@ -64,6 +67,16 @@ public class RestExceptionHandler extends ResponseEntityExceptionHandler {
 		return ResponseEntity.badRequest()
 				.body((new BadRequestException()).response(Constant.TYPE_METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION,
 						detail.toString(), Constant.INSTANCE_METHOD_ARGUMENT_TYPE_MISMATCH_EXCEPTION));
+	}
+
+	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
+	@ExceptionHandler({ SQLIntegrityConstraintViolationException.class })
+	@ResponseBody
+	public ResponseEntity<ErrorResponse> validationFailedSQL(SQLIntegrityConstraintViolationException exc,
+			WebRequest req) {
+		return ResponseEntity.badRequest()
+				.body((new BadRequestException()).response(Constant.TYPE_SQL_INTEGRITY_CONSTRAINT_VIOLATION_EXCEPTION,
+						exc.getMessage(), Constant.INSTANCE_SQL_INTEGRITY_CONSTRAINT_VIOLATION_EXCEPTION));
 	}
 
 }
