@@ -1,32 +1,18 @@
 package com.jgvega.rest.jobsearch.model.response;
 
-import java.io.Serializable;
-import java.util.Date;
-import java.util.List;
+import com.jgvega.rest.jobsearch.entity.Enterprise;
 
-import com.jgvega.rest.jobsearch.entity.Category;
-
-import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
-@Builder
-public class OfferResponse implements Serializable {
+@SuperBuilder
+public class OfferResponse extends ListOfferResponse {
 
-	private static final long serialVersionUID = 7801041997416805816L;
+	private static final long serialVersionUID = 3339137841859186790L;
 	
-	private Long id;
-	private String name;
-	private String description;
-	private Integer minSalary;
-	private Integer maxSalary;
-	private String model;
-	private String location;
-	private Date date;
-	private Category category;
-	private String status;
-	private List<OfferLanguageResponse> languages;
+	private Enterprise enterprise;
 
 }

@@ -23,10 +23,12 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jgvega.rest.jobsearch.commons.entity.CommonModel;
 import com.jgvega.rest.jobsearch.enumeration.EducationLevel;
 import com.jgvega.rest.jobsearch.enumeration.OfferStatus;
 import com.jgvega.rest.jobsearch.enumeration.WorkModel;
+import com.jgvega.rest.jobsearch.serializer.OfferSerializer;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;
@@ -40,6 +42,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "offer")
 @SuperBuilder
 @NoArgsConstructor
+@JsonSerialize(using = OfferSerializer.class)
 public class Offer extends CommonModel implements Serializable {
 
 	private static final long serialVersionUID = -6120846272017329568L;

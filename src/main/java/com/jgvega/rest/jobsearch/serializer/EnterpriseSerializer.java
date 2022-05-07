@@ -26,7 +26,7 @@ public class EnterpriseSerializer extends StdSerializer<Enterprise> {
 				.createAt(value.getCreateAt()).description(value.getDescription())
 				.email(value.getEmail()).id(value.getId()).name(value.getName())
 				.offers(value.getOffers())
-				.status(value.getStatus())
+				.status(value.getStatus().toString())
 				.build();
 		gen.writeObject(response);
 	}

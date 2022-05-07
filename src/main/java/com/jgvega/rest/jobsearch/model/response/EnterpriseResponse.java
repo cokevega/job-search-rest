@@ -6,8 +6,7 @@ import java.util.List;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jgvega.rest.jobsearch.entity.Offer;
-import com.jgvega.rest.jobsearch.enumeration.UserStatus;
-import com.jgvega.rest.jobsearch.serializer.OfferSerializer;
+import com.jgvega.rest.jobsearch.serializer.ListOfferSerializer;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -24,9 +23,9 @@ public class EnterpriseResponse implements Serializable {
 	private String name;
 	private String email;
 	private Date createAt;
-	private UserStatus status;
+	private String status;
 	private String description;
-	@JsonSerialize(using = OfferSerializer.class)
+	@JsonSerialize(using = ListOfferSerializer.class)
 	private List<Offer> offers;
 
 }
