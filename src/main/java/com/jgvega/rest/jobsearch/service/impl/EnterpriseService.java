@@ -18,7 +18,7 @@ public class EnterpriseService extends UserDbService<Enterprise, Long, IEnterpri
 
 	@Override
 	public Enterprise edit(Long id, Enterprise newEntity) {
-		Enterprise oldEntity =super.edit(id, newEntity);
+		Enterprise oldEntity = super.edit(id, newEntity);
 		oldEntity.setDescription(newEntity.getDescription());
 		oldEntity.setEmail(newEntity.getEmail());
 		oldEntity.setName(newEntity.getName());

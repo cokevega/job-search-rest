@@ -13,6 +13,7 @@ import org.hibernate.validator.constraints.Length;
 
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jgvega.rest.jobsearch.commons.entity.UserDb;
+import com.jgvega.rest.jobsearch.serializer.EnterpriseSerializer;
 import com.jgvega.rest.jobsearch.serializer.OfferSerializer;
 import com.jgvega.rest.jobsearch.util.Constant;
 
@@ -27,6 +28,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "enterprise")
 @SuperBuilder
 @NoArgsConstructor
+@JsonSerialize(using = EnterpriseSerializer.class)
 public class Enterprise extends UserDb implements Serializable {
 
 	private static final long serialVersionUID = -333134196983909116L;

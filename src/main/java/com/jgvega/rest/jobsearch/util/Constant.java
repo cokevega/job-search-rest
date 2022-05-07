@@ -1,6 +1,7 @@
 package com.jgvega.rest.jobsearch.util;
 
 public class Constant {
+	//TODO: refactor this class
 	/**
 	 * Global
 	 */
