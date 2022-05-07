@@ -10,7 +10,7 @@ import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.jgvega.rest.jobsearch.entity.Offer;
 import com.jgvega.rest.jobsearch.entity.OfferLanguage;
-import com.jgvega.rest.jobsearch.model.response.ListOfferResponse;
+import com.jgvega.rest.jobsearch.model.response.OfferResponseFromEnterprise;
 import com.jgvega.rest.jobsearch.model.response.OfferLanguageResponse;
 
 public class ListOfferSerializer extends StdSerializer<List<Offer>> {
@@ -27,15 +27,15 @@ public class ListOfferSerializer extends StdSerializer<List<Offer>> {
 
 	@Override
 	public void serialize(List<Offer> value, JsonGenerator gen, SerializerProvider provider) throws IOException {
-		List<ListOfferResponse> offers=new ArrayList<ListOfferResponse>();
+		List<OfferResponseFromEnterprise> offers=new ArrayList<OfferResponseFromEnterprise>();
 		offers=value.stream().map(this::parseOffer).collect(Collectors.toList());
 		gen.writeObject(offers);
 	}
 
-	private ListOfferResponse parseOffer(Offer offer) {
+	private OfferResponseFromEnterprise parseOffer(Offer offer) {
 		List<OfferLanguageResponse> offerLanguages = new ArrayList<OfferLanguageResponse>();
 		offer.getLanguages().forEach(ol -> parseOfferLanguage(ol, offerLanguages));
-		ListOfferResponse offerResponse = ListOfferResponse.builder().category(offer.getCategory())
+		OfferResponseFromEnterprise offerResponse = OfferResponseFromEnterprise.builder().category(offer.getCategory())
 				.date(offer.getDate()).description(offer.getDescription()).id(offer.getId()).languages(offerLanguages)
 				.location(offer.getLocation()).maxSalary(offer.getMaxSalary())
 				.minEducationLevel(offer.getMinEducationLevel().toString()).minSalary(offer.getMinSalary())

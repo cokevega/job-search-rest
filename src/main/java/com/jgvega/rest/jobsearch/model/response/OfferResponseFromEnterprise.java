@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @Getter
 @Setter
 @SuperBuilder
-public class ListOfferResponse implements Serializable {
+public class OfferResponseFromEnterprise implements Serializable {
 
 	private static final long serialVersionUID = 7801041997416805816L;
 	
