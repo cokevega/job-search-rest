@@ -85,7 +85,7 @@ public class Offer extends CommonModel implements Serializable {
 	@Enumerated(EnumType.STRING)
 	@Column(nullable = false)
 	private OfferStatus status;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "offer")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "offer")
 	@LazyCollection(LazyCollectionOption.FALSE)
 	private List<OfferLanguage> languages;
 

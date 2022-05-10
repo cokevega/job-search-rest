@@ -28,7 +28,7 @@ public class Language extends CommonModel implements Serializable {
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
 	private List<EmployeeLanguage> employees;
 
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "language")
+	@OneToMany(cascade = CascadeType.MERGE, mappedBy = "language")
 	private List<OfferLanguage> offers;
 
 	@Override

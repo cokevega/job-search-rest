@@ -15,7 +15,7 @@ public enum WorkModel {
 			return Constant.OFFICE;
 		}
 	},
-	HYBRIDE {
+	HYBRID {
 		@Override
 		public String toString() {
 			return Constant.HYBRID;
