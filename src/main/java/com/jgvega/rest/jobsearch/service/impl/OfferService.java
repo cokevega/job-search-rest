@@ -30,6 +30,7 @@ public class OfferService extends CommonService<Offer, Long, IOfferRepository> i
 	@Autowired
 	private IOfferLanguageService offerLanguageService;
 
+	// TODO: refactor how to save OfferLanguage?
 	@Override
 	public Offer addLanguage(Offer offer, OfferLanguage offerLanguage) {
 		if (offer.getLanguages() == null)
@@ -56,7 +57,27 @@ public class OfferService extends CommonService<Offer, Long, IOfferRepository> i
 		return offer;
 	}
 
-	// TODO: edit
+	@Override
+	public Offer edit(Long id, Offer newEntity) {
+		Offer oldEntity = super.edit(id, newEntity);
+		if (newEntity.getCategory().getId() != oldEntity.getCategory().getId())
+			oldEntity.setCategory(categoryService.findById(newEntity.getCategory().getId()));
+		oldEntity.setDescription(newEntity.getDescription());
+		newEntity.getLanguages().stream().filter(ol -> !oldEntity.getLanguages().contains(OfferLanguage.builder()
+				.id(OfferLanguageKey.builder().offerId(id).languageId(ol.getLanguage().getId()).build()).build()))
+				.forEach(ol -> addLanguage(oldEntity,
+						OfferLanguage.builder()
+								.id(OfferLanguageKey.builder().offerId(id).languageId(ol.getLanguage().getId()).build())
+								.language(ol.getLanguage()).level(ol.getLevel()).offer(oldEntity).build()));
+		oldEntity.setLocation(newEntity.getLocation());
+		oldEntity.setMaxSalary(newEntity.getMaxSalary());
+		oldEntity.setMinEducationLevel(newEntity.getMinEducationLevel());
+		oldEntity.setMinSalary(newEntity.getMinSalary());
+		oldEntity.setModel(newEntity.getModel());
+		oldEntity.setName(newEntity.getName());
+		oldEntity.setStatus(newEntity.getStatus());
+		return super.save(oldEntity);
+	}
 
 	// TODO: filter
 

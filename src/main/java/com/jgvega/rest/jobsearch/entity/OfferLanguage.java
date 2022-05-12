@@ -48,4 +48,14 @@ public class OfferLanguage implements Serializable {
 	@JoinColumn(name = "language_id")
 	private Language language;
 
+	@Override
+	public boolean equals(Object obj) {
+		return id.equals(((OfferLanguage)obj).getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
+
 }
