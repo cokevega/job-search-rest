@@ -5,6 +5,11 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
+import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
+import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
 import com.jgvega.rest.jobsearch.commons.service.impl.CommonService;
@@ -79,6 +84,33 @@ public class OfferService extends CommonService<Offer, Long, IOfferRepository> i
 		return super.save(oldEntity);
 	}
 
-	// TODO: filter
+	@Override
+	public List<Offer> filter(Offer entity) {
+		ExampleMatcher exampleMatcher = ExampleMatcher.matching().withStringMatcher(StringMatcher.CONTAINING)
+				.withIgnoreCase();
+		Offer offer = Offer.builder().build();
+		if (entity.getName() != null)
+			offer.setName(entity.getName());
+		if (entity.getDescription() != null)
+			offer.setDescription(entity.getDescription());
+		if (entity.getStatus() != null)
+			offer.setStatus(entity.getStatus());
+		if (entity.getEnterprise() != null)
+			offer.setEnterprise(entity.getEnterprise());
+		if (entity.getCategory() != null)
+			offer.setCategory(entity.getCategory());
+		if (entity.getMinEducationLevel() != null) {
+			offer.setMinEducationLevel(entity.getMinEducationLevel());
+			// TODO: comparison??
+			
+		}
+//		if (entity.getMinSalary() != null)
+//			offer.setMinSalary(entity.getMinSalary());
+//		if (entity.getMaxSalary() != null)
+//			offer.setMaxSalary(entity.getMaxSalary());
+//		if (entity.getModel() != null)
+//			offer.setModel(entity.getModel());
+		return findByExample(Example.of(offer, exampleMatcher));
+	}
 
 }
