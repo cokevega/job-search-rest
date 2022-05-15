@@ -10,7 +10,7 @@ public class Constant {
 	 * Work model
 	 */
 	public static final String REMOTE = "Remote";
-	public static final String HYBRID = "Hybride";
+	public static final String HYBRID = "Hybrid";
 	public static final String OFFICE = "Office";
 	/**
 	 * Level

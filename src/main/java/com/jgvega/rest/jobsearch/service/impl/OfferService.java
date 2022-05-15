@@ -7,8 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.ExampleMatcher;
-import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatcher;
-import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 import org.springframework.data.domain.ExampleMatcher.StringMatcher;
 import org.springframework.stereotype.Service;
 
@@ -99,18 +97,21 @@ public class OfferService extends CommonService<Offer, Long, IOfferRepository> i
 			offer.setEnterprise(entity.getEnterprise());
 		if (entity.getCategory() != null)
 			offer.setCategory(entity.getCategory());
-		if (entity.getMinEducationLevel() != null) {
+		if (entity.getModel() != null)
+			offer.setModel(entity.getModel());
+		if (entity.getMinEducationLevel() != null)
 			offer.setMinEducationLevel(entity.getMinEducationLevel());
-			// TODO: comparison??
-			
+		List<Offer> offers = findByExample(Example.of(offer, exampleMatcher));
+		if (entity.getMaxSalary() != null || entity.getMinSalary() != null) {
+			offers = offers.stream().filter(o -> {
+				if (entity.getMinSalary() != null && o.getMinSalary() < entity.getMinSalary())
+					return false;
+				if (entity.getMaxSalary() != null && o.getMaxSalary() > entity.getMaxSalary())
+					return false;
+				return true;
+			}).toList();
 		}
-//		if (entity.getMinSalary() != null)
-//			offer.setMinSalary(entity.getMinSalary());
-//		if (entity.getMaxSalary() != null)
-//			offer.setMaxSalary(entity.getMaxSalary());
-//		if (entity.getModel() != null)
-//			offer.setModel(entity.getModel());
-		return findByExample(Example.of(offer, exampleMatcher));
+		return offers;
 	}
 
 }
