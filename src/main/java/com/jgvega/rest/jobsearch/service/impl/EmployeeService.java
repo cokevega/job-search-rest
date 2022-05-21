@@ -1,7 +1,10 @@
 package com.jgvega.rest.jobsearch.service.impl;
 
 import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.jgvega.rest.jobsearch.commons.service.impl.CommonService;
@@ -10,12 +13,18 @@ import com.jgvega.rest.jobsearch.entity.Employee;
 import com.jgvega.rest.jobsearch.entity.EmployeeLanguage;
 import com.jgvega.rest.jobsearch.entity.Experience;
 import com.jgvega.rest.jobsearch.entity.Skill;
+import com.jgvega.rest.jobsearch.entity.key.EmployeeLanguageKey;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
+import com.jgvega.rest.jobsearch.service.IEmployeeLanguageService;
 import com.jgvega.rest.jobsearch.service.IEmployeeService;
 
 @Service
-public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepository>
-		implements IEmployeeService {
+public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepository> implements IEmployeeService {
+
+	//TODO: refactor how to save skill, education, experience and languages?
+	
+	@Autowired
+	IEmployeeLanguageService employeeLanguageService;
 
 	@Override
 	public Employee addEducation(Employee employee, Education education) {
@@ -58,6 +67,23 @@ public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepo
 			employee.getLanguages().add(employeeLanguage);
 			return repository.save(employee);
 		}
+		return employee;
+	}
+
+	//TODO: evaluate if the skill already exists
+	@Override
+	public Employee save(Employee entity) {
+		List<EmployeeLanguage> employeeLanguages = entity.getLanguages();
+		entity.setLanguages(null);
+		Employee employee = super.save(entity);
+		employeeLanguages = employeeLanguages.stream().map(el -> {
+			return EmployeeLanguage
+					.builder().employee(employee).language(el.getLanguage()).id(EmployeeLanguageKey.builder()
+							.employeeId(employee.getId()).languageId(el.getLanguage().getId()).build())
+					.level(el.getLevel()).build();
+		}).collect(Collectors.toList());
+		employeeLanguages= employeeLanguageService.saveAll(employeeLanguages);
+		employee.setLanguages(employeeLanguages);
 		return employee;
 	}
 

@@ -34,7 +34,7 @@ public class OfferLanguage implements Serializable {
 	private static final long serialVersionUID = -412611093817476571L;
 
 	@EmbeddedId
-	private OfferLanguageKey id;
+	private OfferLanguageKey id=OfferLanguageKey.builder().build();
 	@NotNull
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)

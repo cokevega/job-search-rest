@@ -9,7 +9,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Builder
-public class OfferLanguageResponse implements Serializable {
+public class EntityLanguageResponse implements Serializable {
 
 	private static final long serialVersionUID = -5910244376482841247L;
 

@@ -19,7 +19,9 @@ import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.validator.constraints.Length;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jgvega.rest.jobsearch.commons.entity.UserDb;
+import com.jgvega.rest.jobsearch.serializer.EmployeeSerializer;
 import com.jgvega.rest.jobsearch.util.Constant;
 
 import lombok.Getter;
@@ -33,6 +35,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "employee")
 @SuperBuilder
 @NoArgsConstructor
+@JsonSerialize(using = EmployeeSerializer.class)
 public class Employee extends UserDb implements Serializable {
 
 	private static final long serialVersionUID = -5869837062603607960L;

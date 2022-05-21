@@ -34,7 +34,7 @@ public class EmployeeLanguage implements Serializable {
 	private static final long serialVersionUID = -1187709929923570265L;
 
 	@EmbeddedId
-	private EmployeeLanguageKey id;
+	private EmployeeLanguageKey id=EmployeeLanguageKey.builder().build();
 	@NotNull
 	@Column(nullable = false)
 	@Enumerated(EnumType.STRING)
@@ -47,5 +47,15 @@ public class EmployeeLanguage implements Serializable {
 	@MapsId("languageId")
 	@JoinColumn(name = "language_id")
 	private Language language;
+
+	@Override
+	public boolean equals(Object obj) {
+		return id.equals(((EmployeeLanguage) obj).getId());
+	}
+
+	@Override
+	public int hashCode() {
+		return id.hashCode();
+	}
 
 }

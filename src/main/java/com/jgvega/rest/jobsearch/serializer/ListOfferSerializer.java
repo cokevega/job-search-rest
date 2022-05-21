@@ -9,9 +9,7 @@ import com.fasterxml.jackson.core.JsonGenerator;
 import com.fasterxml.jackson.databind.SerializerProvider;
 import com.fasterxml.jackson.databind.ser.std.StdSerializer;
 import com.jgvega.rest.jobsearch.entity.Offer;
-import com.jgvega.rest.jobsearch.entity.OfferLanguage;
 import com.jgvega.rest.jobsearch.model.response.OfferResponseFromEnterprise;
-import com.jgvega.rest.jobsearch.model.response.OfferLanguageResponse;
 
 public class ListOfferSerializer extends StdSerializer<List<Offer>> {
 
@@ -33,19 +31,12 @@ public class ListOfferSerializer extends StdSerializer<List<Offer>> {
 	}
 
 	private OfferResponseFromEnterprise parseOffer(Offer offer) {
-		List<OfferLanguageResponse> offerLanguages = new ArrayList<OfferLanguageResponse>();
-		offer.getLanguages().forEach(ol -> parseOfferLanguage(ol, offerLanguages));
 		OfferResponseFromEnterprise offerResponse = OfferResponseFromEnterprise.builder().category(offer.getCategory())
-				.date(offer.getDate()).description(offer.getDescription()).id(offer.getId()).languages(offerLanguages)
+				.date(offer.getDate()).description(offer.getDescription()).id(offer.getId()).languages(offer.getLanguages())
 				.location(offer.getLocation()).maxSalary(offer.getMaxSalary())
 				.minEducationLevel(offer.getMinEducationLevel().toString()).minSalary(offer.getMinSalary())
 				.model(offer.getModel().toString()).name(offer.getName()).status(offer.getStatus().toString()).build();
 		return offerResponse;
-	}
-
-	private void parseOfferLanguage(OfferLanguage offerLanguage, List<OfferLanguageResponse> offerLanguages) {
-		offerLanguages.add(OfferLanguageResponse.builder().id(offerLanguage.getLanguage().getId())
-				.level(offerLanguage.getLevel().toString()).name(offerLanguage.getLanguage().getName()).build());
 	}
 
 }

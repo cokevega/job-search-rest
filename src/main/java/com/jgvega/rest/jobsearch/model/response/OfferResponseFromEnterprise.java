@@ -4,7 +4,10 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import com.jgvega.rest.jobsearch.entity.Category;
+import com.jgvega.rest.jobsearch.entity.OfferLanguage;
+import com.jgvega.rest.jobsearch.serializer.ListOfferLanguageSerializer;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -28,6 +31,7 @@ public class OfferResponseFromEnterprise implements Serializable {
 	private Category category;
 	private String minEducationLevel;
 	private String status;
-	private List<OfferLanguageResponse> languages;
+	@JsonSerialize(using = ListOfferLanguageSerializer.class)
+	private List<OfferLanguage> languages;
 
 }
