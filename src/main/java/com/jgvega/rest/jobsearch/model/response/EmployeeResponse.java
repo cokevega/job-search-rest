@@ -8,6 +8,7 @@ import com.jgvega.rest.jobsearch.entity.Education;
 import com.jgvega.rest.jobsearch.entity.EmployeeLanguage;
 import com.jgvega.rest.jobsearch.entity.Experience;
 import com.jgvega.rest.jobsearch.entity.Skill;
+import com.jgvega.rest.jobsearch.enumeration.UserStatus;
 import com.jgvega.rest.jobsearch.serializer.ListEmployeeLanguageSerializer;
 
 import lombok.Builder;
@@ -18,11 +19,12 @@ import lombok.Setter;
 @Setter
 @Builder
 public class EmployeeResponse {
-	
+
 	private Long id;
 	private String name;
 	private String email;
 	private Date createAt;
+	private UserStatus status;
 	private Date born;
 	private String phone;
 	private List<Education> education;
@@ -30,5 +32,5 @@ public class EmployeeResponse {
 	private List<Skill> skills;
 	@JsonSerialize(using = ListEmployeeLanguageSerializer.class)
 	private List<EmployeeLanguage> languages;
-	
+
 }

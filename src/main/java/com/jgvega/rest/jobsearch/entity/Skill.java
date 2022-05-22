@@ -19,6 +19,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @NoArgsConstructor
 public class Skill extends Attribute implements Serializable {
+	
+	//TODO: change Skill-Employee relationship to ManyToMany?
 
 	private static final long serialVersionUID = -6188182183674966879L;
 

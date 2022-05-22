@@ -6,6 +6,7 @@ import org.springframework.data.domain.ExampleMatcher.GenericPropertyMatchers;
 
 import com.jgvega.rest.jobsearch.commons.entity.UserDb;
 import com.jgvega.rest.jobsearch.commons.service.impl.CommonService;
+import com.jgvega.rest.jobsearch.entity.Employee;
 import com.jgvega.rest.jobsearch.entity.Enterprise;
 import com.jgvega.rest.jobsearch.repository.IUserDbRepository;
 import com.jgvega.rest.jobsearch.service.IUserDbService;
@@ -34,6 +35,20 @@ public class UserDbService<E extends UserDb, I, R extends IUserDbRepository<E, I
 	public Enterprise parseToEnterprise(UserDb userDb) {
 		return Enterprise.builder().createAt(userDb.getCreateAt()).email(userDb.getEmail()).name(userDb.getName())
 				.status(userDb.getStatus()).build();
+	}
+
+	@Override
+	public Employee parseToEmployee(UserDb userDb) {
+		return Employee.builder().createAt(userDb.getCreateAt()).email(userDb.getEmail()).name(userDb.getName())
+				.status(userDb.getStatus()).build();
+	}
+	
+	@Override
+	public E edit(I id, E newEntity) {
+		E oldEntity=super.edit(id, newEntity);
+		oldEntity.setName(newEntity.getName());
+		oldEntity.setStatus(newEntity.getStatus());
+		return oldEntity;
 	}
 
 }

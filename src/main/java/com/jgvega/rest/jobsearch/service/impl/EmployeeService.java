@@ -7,7 +7,6 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.jgvega.rest.jobsearch.commons.service.impl.CommonService;
 import com.jgvega.rest.jobsearch.entity.Education;
 import com.jgvega.rest.jobsearch.entity.Employee;
 import com.jgvega.rest.jobsearch.entity.EmployeeLanguage;
@@ -19,7 +18,7 @@ import com.jgvega.rest.jobsearch.service.IEmployeeLanguageService;
 import com.jgvega.rest.jobsearch.service.IEmployeeService;
 
 @Service
-public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepository> implements IEmployeeService {
+public class EmployeeService extends UserDbService<Employee, Long, IEmployeeRepository> implements IEmployeeService {
 
 	//TODO: refactor how to save skill, education, experience and languages?
 	
@@ -70,7 +69,6 @@ public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepo
 		return employee;
 	}
 
-	//TODO: evaluate if the skill already exists
 	@Override
 	public Employee save(Employee entity) {
 		List<EmployeeLanguage> employeeLanguages = entity.getLanguages();
@@ -85,6 +83,14 @@ public class EmployeeService extends CommonService<Employee, Long, IEmployeeRepo
 		employeeLanguages= employeeLanguageService.saveAll(employeeLanguages);
 		employee.setLanguages(employeeLanguages);
 		return employee;
+	}
+	
+	@Override
+	public Employee edit(Long id, Employee newEntity) {
+		Employee oldEmployee=super.edit(id, newEntity);
+		oldEmployee.setBorn(newEntity.getBorn());
+		oldEmployee.setPhone(newEntity.getPhone());
+		return save(oldEmployee);
 	}
 
 }

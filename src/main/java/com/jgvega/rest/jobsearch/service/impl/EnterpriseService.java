@@ -20,8 +20,6 @@ public class EnterpriseService extends UserDbService<Enterprise, Long, IEnterpri
 	public Enterprise edit(Long id, Enterprise newEntity) {
 		Enterprise oldEntity = super.edit(id, newEntity);
 		oldEntity.setDescription(newEntity.getDescription());
-		oldEntity.setName(newEntity.getName());
-		oldEntity.setStatus(newEntity.getStatus());
 		return save(oldEntity);
 	}
 

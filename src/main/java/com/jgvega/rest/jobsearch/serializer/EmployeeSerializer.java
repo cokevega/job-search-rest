@@ -24,9 +24,9 @@ public class EmployeeSerializer extends StdSerializer<Employee> {
 	public void serialize(Employee value, JsonGenerator gen, SerializerProvider provider) throws IOException {
 		EmployeeResponse employeeResponse = EmployeeResponse.builder().born(value.getBorn())
 				.createAt(value.getCreateAt()).education(value.getEducation()).email(value.getEmail())
-				.experiences(value.getExperiences()).id(value.getId())
-				.languages(value.getLanguages())
-				.name(value.getName()).phone(value.getPhone()).skills(value.getSkills()).build();
+				.experiences(value.getExperiences()).id(value.getId()).status(value.getStatus())
+				.languages(value.getLanguages()).name(value.getName()).phone(value.getPhone()).skills(value.getSkills())
+				.build();
 		gen.writeObject(employeeResponse);
 	}
 
