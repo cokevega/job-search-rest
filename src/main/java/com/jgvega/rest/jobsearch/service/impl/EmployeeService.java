@@ -1,29 +1,35 @@
 package com.jgvega.rest.jobsearch.service.impl;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
+import com.jgvega.rest.jobsearch.commons.entity.UserDb;
 import com.jgvega.rest.jobsearch.entity.Education;
 import com.jgvega.rest.jobsearch.entity.Employee;
 import com.jgvega.rest.jobsearch.entity.EmployeeLanguage;
 import com.jgvega.rest.jobsearch.entity.Experience;
 import com.jgvega.rest.jobsearch.entity.Skill;
 import com.jgvega.rest.jobsearch.entity.key.EmployeeLanguageKey;
+import com.jgvega.rest.jobsearch.model.request.EmployeeFilterRequest;
 import com.jgvega.rest.jobsearch.repository.IEmployeeRepository;
 import com.jgvega.rest.jobsearch.service.IEmployeeLanguageService;
 import com.jgvega.rest.jobsearch.service.IEmployeeService;
+import com.jgvega.rest.jobsearch.util.Util;
 
 @Service
 public class EmployeeService extends UserDbService<Employee, Long, IEmployeeRepository> implements IEmployeeService {
 
-	//TODO: refactor how to save skill, education, experience and languages?
-	
+	// TODO: refactor how to save skill, education, experience and languages?
+
 	@Autowired
-	IEmployeeLanguageService employeeLanguageService;
+	private IEmployeeLanguageService employeeLanguageService;
 
 	@Override
 	public Employee addEducation(Employee employee, Education education) {
@@ -80,17 +86,43 @@ public class EmployeeService extends UserDbService<Employee, Long, IEmployeeRepo
 							.employeeId(employee.getId()).languageId(el.getLanguage().getId()).build())
 					.level(el.getLevel()).build();
 		}).collect(Collectors.toList());
-		employeeLanguages= employeeLanguageService.saveAll(employeeLanguages);
+		employeeLanguages = employeeLanguageService.saveAll(employeeLanguages);
 		employee.setLanguages(employeeLanguages);
 		return employee;
 	}
-	
+
 	@Override
 	public Employee edit(Long id, Employee newEntity) {
-		Employee oldEmployee=super.edit(id, newEntity);
+		Employee oldEmployee = super.edit(id, newEntity);
 		oldEmployee.setBorn(newEntity.getBorn());
 		oldEmployee.setPhone(newEntity.getPhone());
 		return save(oldEmployee);
+	}
+
+	@Override
+	public List<Employee> filter(Employee entity) {
+		Example<UserDb> userDbExample = createUserDbExampleMatcher(entity);
+		Employee employee = parseToEmployee(userDbExample.getProbe());
+		return repository.findAll(Example.of(employee, userDbExample.getMatcher()));
+	}
+
+	@Override
+	public List<Employee> filterEmployeeUsingKeywordsOrAge(EmployeeFilterRequest employee) {
+		List<Employee> employees = filter(Employee.builder().email(employee.getEmail()).name(employee.getName())
+				.status(employee.getStatus()).build());
+		if(!employees.isEmpty()) {
+			employees=employees.stream().filter(e -> {
+				Integer age=LocalDateTime.now().getYear() - Util.getLocalDateTime(e.getBorn()).getYear();
+				if(employee.getMinAge()!=null && age<employee.getMinAge())
+					return false;
+				if(employee.getMaxAge()!=null && age>employee.getMaxAge())
+					return false;
+				// TODO: keywords (experiences) and languages
+				return true;
+			}).toList();
+			
+		}
+		return employees;
 	}
 
 }

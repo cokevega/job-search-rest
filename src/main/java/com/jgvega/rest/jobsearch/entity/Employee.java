@@ -39,7 +39,9 @@ import lombok.experimental.SuperBuilder;
 public class Employee extends UserDb implements Serializable {
 
 	private static final long serialVersionUID = -5869837062603607960L;
-
+	
+	// TODO: categories for education
+	
 	@Temporal(TemporalType.DATE)
 	@NotNull
 	@Column(nullable = false)

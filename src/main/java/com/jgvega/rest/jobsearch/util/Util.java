@@ -1,7 +1,7 @@
 package com.jgvega.rest.jobsearch.util;
 
 import java.time.Instant;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.util.Date;
 
@@ -15,8 +15,8 @@ public class Util {
 	 * @param date LocalDate to transform into Date
 	 * @return Date at the moment of date param
 	 */
-	public static Date getDate(LocalDate date) {
-		return Date.from(date.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+	public static Date getDate(LocalDateTime date) {
+		return Date.from(date.atZone(ZoneId.systemDefault()).toInstant());
 	}
 
 	/**
@@ -25,8 +25,8 @@ public class Util {
 	 * @param date Date to transform into LocalDate
 	 * @return LocalDate at the moment of date param
 	 */
-	public static LocalDate getLocalDate(Date date) {
-		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDate();
+	public static LocalDateTime getLocalDateTime(Date date) {
+		return Instant.ofEpochMilli(date.getTime()).atZone(ZoneId.systemDefault()).toLocalDateTime();
 	}
 
 	/**

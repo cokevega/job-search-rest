@@ -99,7 +99,7 @@ public class EmployeeFaker extends CommonFaker<Employee> {
 		Employee employee = ((List<Employee>) fakeEntities).get(index);
 		Date now = new Date();
 		Date beginDate = faker.date()
-				.between(Util.getDate(Util.getLocalDate(employee.getBorn()).plusYears(Constant.MIN_AGE)), now);
+				.between(Util.getDate(Util.getLocalDateTime(employee.getBorn()).plusYears(Constant.MIN_AGE)), now);
 		Experience fakeExperience = Experience.builder().begin(beginDate).city(faker.address().city())
 				.comments(faker.lorem().paragraph()).end(faker.date().between(beginDate, now))
 				.enterprise(faker.company().name()).name(faker.job().position()).build();
